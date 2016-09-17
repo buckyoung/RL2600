@@ -3,13 +3,11 @@ using System.Collections;
 using RL2600.System;
 
 namespace RL2600.Behavior {
-
-	[RequireComponent (typeof (Player.Player))]
+	
 	[RequireComponent (typeof (Rigidbody2D))]
 
 	public class MoveableAI : MonoBehaviour, IMoveable {
-		public float speed = 1200.0f;
-		public int startingAngle = 0;
+		private float speed = 1200.0f;
 
 		private int id;
 		private Rigidbody2D rb2d;
@@ -28,7 +26,7 @@ namespace RL2600.Behavior {
 		private bool justGotBoost = false;
 
 		void Start() {
-			id = GetComponent<Player.Player>().id;
+			id = GetComponentInParent<Player.Player>().id;
 			rb2d = GetComponent<Rigidbody2D>();
 
 			ball = GameObject.Find("Ball");
@@ -69,7 +67,7 @@ namespace RL2600.Behavior {
 
 			if (movement != Vector3.zero) {
 				float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
-				transform.rotation = Quaternion.AngleAxis(angle + startingAngle, Vector3.forward);
+				transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 			}
 
 			// Randomly pause movement

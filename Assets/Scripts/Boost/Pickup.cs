@@ -15,8 +15,8 @@ namespace RL2600.Boost {
 		}
 		
 		void OnTriggerStay2D(Collider2D other) {
-			if (r.enabled && other.tag == "Player") {
-				int id = other.gameObject.GetComponent<Player.Player>().id;
+			if (r.enabled && other.tag == "Car") {
+				int id = other.gameObject.GetComponentInParent<Player.Player>().id;
 
 				if (BoostManager.pickupBoost(id)) {
 					StartCoroutine(pickup());

@@ -6,28 +6,23 @@ namespace RL2600.System {
 	public class PlayerManager : MonoBehaviour {
 		private static int numberOfPlayers = 2;
 
-		private static GameObject[] players = new GameObject[PlayerManager.getNumberOfPlayers()];
-
+		private static GameObject[] playerCars = new GameObject[PlayerManager.getNumberOfPlayers()];
 		private static Player.Player[] playerScripts = new Player.Player[PlayerManager.getNumberOfPlayers()];
-
 		private static Rigidbody2D[] rigidBodies = new Rigidbody2D[PlayerManager.getNumberOfPlayers()];
-
 		private static Vector3[] initialPositions = new Vector3[PlayerManager.getNumberOfPlayers()];
-
 		private static Quaternion[] initialRotations = new Quaternion[PlayerManager.getNumberOfPlayers()];
 
 		void Start() {
-			// Get player scripts to stop them from moving on goal
 			GameObject playerContainer = GameObject.Find("PlayerContainer");
 			int i = 0;
 
 			foreach (Transform child in playerContainer.transform) {
 				if (child != playerContainer.transform) {
-					players[i] = child.gameObject;
+					playerCars[i] = child.GetChild(0).gameObject;
 					playerScripts[i] = child.GetComponent<Player.Player>();
-					rigidBodies[i] = child.GetComponent<Rigidbody2D>();
-					initialPositions[i] = child.position;
-					initialRotations[i] = child.rotation;
+					rigidBodies[i] = child.GetComponentInChildren<Rigidbody2D>();
+					initialPositions[i] = child.GetChild(0).position;
+					initialRotations[i] = child.GetChild(0).rotation;
 
 					i++;
 				}
@@ -55,8 +50,8 @@ namespace RL2600.System {
 
 		public static void resetPlayers() {
 			for (int i = 0; i < PlayerManager.getNumberOfPlayers(); i++) {
-				players[i].transform.position = initialPositions[i];
-				players[i].transform.rotation = initialRotations[i];
+				playerCars[i].transform.position = initialPositions[i];
+				playerCars[i].transform.rotation = initialRotations[i];
 			}
 		}
 
