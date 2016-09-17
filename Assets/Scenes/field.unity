@@ -1964,7 +1964,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1656348809}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b637e96c80fbb417d9aabb74138dd253, type: 3}
+  m_Script: {fileID: 11500000, guid: a18a3111121cf4c8b80267909002c683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1200
@@ -1981,7 +1981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  isAI: 1
+  isAI: 0
 --- !u!61 &1656348814
 BoxCollider2D:
   m_ObjectHideFlags: 0
