@@ -1,14 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Time/TimeManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/HUD/Scoreboard.cs">
     <Files>
-      <File FileName="Assets/Scripts/Time/TimeManager.cs" Line="7" Column="34" />
-      <File FileName="Assets/Scripts/Score/ScoreManager.cs" Line="15" Column="37" />
-      <File FileName="Assets/Scripts/Game/Game.cs" Line="17" Column="4" />
-      <File FileName="Assets/Scripts/Game/GameManager.cs" Line="46" Column="4" />
-      <File FileName="Assets/Scripts/Ball/BallManager.cs" Line="30" Column="5" />
-      <File FileName="Assets/Scripts/Player/PlayerManager.cs" Line="46" Column="44" />
-      <File FileName="Assets/Scripts/HUD/Scoreboard.cs" Line="17" Column="62" />
+      <File FileName="Assets/Scripts/Score/ScoreManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Game/GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Ball/BallManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Player/PlayerManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/HUD/Scoreboard.cs" Line="41" Column="2" />
+      <File FileName="Assets/Scripts/Boost/PickupManager.cs" Line="6" Column="67" />
+      <File FileName="Assets/Scripts/Boost/BoostManager.cs" Line="9" Column="45" />
+      <File FileName="Assets/Scripts/Game/Game.cs" Line="25" Column="4" />
+      <File FileName="Assets/Scripts/Notification/Notification.cs" Line="22" Column="58" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

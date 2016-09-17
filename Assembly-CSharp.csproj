@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\Ball\BallManager.cs" />
      <Compile Include="Assets\Scripts\Boost\BoostManager.cs" />
      <Compile Include="Assets\Scripts\Boost\Pickup.cs" />
+     <Compile Include="Assets\Scripts\Boost\PickupManager.cs" />
      <Compile Include="Assets\Scripts\Game\Game.cs" />
      <Compile Include="Assets\Scripts\Game\GameManager.cs" />
      <Compile Include="Assets\Scripts\HUD\Scoreboard.cs" />
@@ -55,6 +56,7 @@
      <Compile Include="Assets\Scripts\Move\MoveableAI.cs" />
      <Compile Include="Assets\Scripts\Move\MoveablePlayer.cs" />
      <Compile Include="Assets\Scripts\Move\MoveablePlayerGas.cs" />
+     <Compile Include="Assets\Scripts\Notification\Notification.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Score\Goal.cs" />

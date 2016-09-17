@@ -23,7 +23,7 @@ namespace RL2600.System {
 
 		public static float getBoostModifier(int id) {
 			// AI stuff
-			if (PlayerManager.checkIsAI(id-1)) {
+			if (PlayerManager.checkIsAI(id)) {
 				return aiBoost(id);
 			}
 
