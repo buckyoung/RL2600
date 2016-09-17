@@ -5,7 +5,7 @@ namespace RL2600.System {
 	public class NotificationManager : MonoBehaviour {
 		private static GUIText midfieldGUIText;
 
-		void Start() {
+		void Awake() {
 			GameObject midfield = GameObject.Find("Notify-midfield");
 			midfieldGUIText = midfield.GetComponent<GUIText>();
 		}

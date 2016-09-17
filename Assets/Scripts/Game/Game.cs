@@ -6,6 +6,10 @@ namespace RL2600.System {
 		private int afterGoalWait = 1;
 
 		public void initiateKickoff() {
+			StartCoroutine(kickoffCountdown());
+		}
+
+		public void initiateGoalReset() {
 			StartCoroutine(waitAfterGoal());
 		}
 
@@ -27,6 +31,7 @@ namespace RL2600.System {
 			NotificationManager.notifyMidfield("1");
 			yield return new WaitForSeconds(1);
 			NotificationManager.notifyMidfield("GO!");
+
 			GameManager.renableOnKickoff();
 
 			yield return new WaitForSeconds(1);

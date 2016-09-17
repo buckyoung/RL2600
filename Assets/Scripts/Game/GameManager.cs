@@ -10,6 +10,12 @@ namespace RL2600.System {
 		void Start() {
 			GameObject system = GameObject.Find("System");
 			game = system.GetComponent<Game>();
+
+			BallManager.disableBall(false);
+			PlayerManager.disablePlayers();
+			TimeManager.pauseTime();
+
+			game.initiateKickoff();
 		}
 
 		public static void score() {
@@ -17,7 +23,7 @@ namespace RL2600.System {
 			PlayerManager.disablePlayers();
 			TimeManager.pauseTime();
 
-			game.initiateKickoff();
+			game.initiateGoalReset();
 		}
 
 		public static void resetAllAfterGoal() {
@@ -30,6 +36,7 @@ namespace RL2600.System {
 		}
 
 		public static void renableOnKickoff() {
+			BallManager.enableBall();
 			PlayerManager.enablePlayers();
 			TimeManager.unpauseTime();
 		}
