@@ -21,6 +21,7 @@ namespace RL2600.System {
 
 			second -= difference;
 
+			checkNotify();
 			checkEndOfTime();
 		}
 
@@ -33,7 +34,15 @@ namespace RL2600.System {
 		}
 
 		public static string getTime() {
-			return minute + ":" + Mathf.Floor(second).ToString("00");
+			int wholeSecond = Mathf.CeilToInt(second);
+			int reportMinute = minute;
+
+			if (wholeSecond == 60) {
+				wholeSecond = 0;
+				reportMinute++;
+			}
+
+			return reportMinute + ":" + wholeSecond.ToString("00");
 		}
 
 		// Private
@@ -45,6 +54,34 @@ namespace RL2600.System {
 				hasEnded = true;
 
 				GameManager.endGame();
+			}
+		}
+
+		private static void checkNotify() {
+			if (minute != 0) { return; }
+
+			int wholeSecond = Mathf.CeilToInt(second);
+
+			if (wholeSecond == 60) { 
+				NotificationManager.notifyMidfield("ONE MINUTE REMAINING!");
+			}
+
+			// Clear the ONE MINUTE REMAINING message
+			if (wholeSecond == 58) {
+				NotificationManager.clearMidfield();
+			}
+
+			if (wholeSecond == 30) {
+				NotificationManager.notifyMidfield("30 SECONDS REMAINING!");
+			} 
+
+			// Clear the 30 SECONDS REMAINING message
+			if (wholeSecond == 28) {
+				NotificationManager.clearMidfield();
+			}
+
+			if (wholeSecond <= 10) {
+				NotificationManager.notifyMidfield(wholeSecond.ToString());
 			}
 		}
 	}

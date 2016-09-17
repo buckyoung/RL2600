@@ -5,19 +5,35 @@ using RL2600.Score;
 using RL2600.System;
 
 namespace RL2600.HUD {
+
+	[ExecuteInEditMode]
+
 	public class Scoreboard : MonoBehaviour {
 		public Font font;
 		private GUIStyle guiStyle = new GUIStyle();
+		private GUIStyle blueStyle = new GUIStyle();
+		private GUIStyle redStyle = new GUIStyle();
 
-		int w = 100;
-		int h = 100;
-
+		int w = 60;
+		int h = 50;
+	
 		void Start() {
 			guiStyle.fontSize = 40;
 			guiStyle.normal.textColor = new Vector4(0.25f, 0.25f, 0.25f, 1.0f);
 			guiStyle.font = font;
+			guiStyle.clipping = TextClipping.Clip;
+
+			blueStyle.fontSize = 40;
+			blueStyle.normal.textColor = new Vector4(0.25f, 0.25f, 0.5f, 1.0f);
+			blueStyle.font = font;
+			blueStyle.clipping = TextClipping.Clip;
+
+			redStyle.fontSize = 40;
+			redStyle.normal.textColor = new Vector4(0.5f, 0.25f, 0.25f, 1.0f);
+			redStyle.font = font;
+			redStyle.clipping = TextClipping.Clip;
 		}
-			
+
 		void OnGUI() {
 			drawHud();
 		}
@@ -25,13 +41,14 @@ namespace RL2600.HUD {
 		private void drawHud() {
 			int y = Screen.height - 80;
 
-			GUI.Label(new Rect(w, y, w, h), ScoreManager.getScore(1).ToString(), guiStyle);
-			GUI.Label(new Rect(w * 2, y, w, h), getBoost(1), guiStyle);
+			GUI.Label(new Rect(w, y, w, h), getBoost(1), blueStyle);
 
-			GUI.Label(new Rect((Screen.width / 2) - (w / 2), y, w, h), TimeManager.getTime(), guiStyle);
+			GUI.Label(new Rect((Screen.width / 2) - (w*2), y, w, h), ScoreManager.getScore(1).ToString(), blueStyle);
+			GUI.Label(new Rect((Screen.width / 2) - (w / 2), y, w*2, h), TimeManager.getTime(), guiStyle);
+			GUI.Label(new Rect((Screen.width / 2) + (w*2), y, w, h), ScoreManager.getScore(2).ToString(), redStyle);
 
-			GUI.Label(new Rect(Screen.width - (w * 2), y, w, h), getBoost(2), guiStyle);
-			GUI.Label(new Rect(Screen.width - w, y, w, h), ScoreManager.getScore(2).ToString(), guiStyle);
+			GUI.Label(new Rect(Screen.width - w*2, y, w, h), getBoost(2), redStyle);
+
 		}
 
 		private string getBoost(int id) {
@@ -39,3 +56,7 @@ namespace RL2600.HUD {
 		}
 	}
 }
+
+//	public Rect debugPosition = new Rect(Screen.width - 100, Screen.height - 80, 50, 100);
+//	public string debugText = "000";
+//	GUI.Label(debugPosition, debugText, guiStyle);

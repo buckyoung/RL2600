@@ -41,6 +41,8 @@ namespace RL2600.System {
 		public static void endGame() {
 			hasGameEnded = true; 
 
+			NotificationManager.notifyMidfield("GAME OVER");
+
 			BallManager.disableBall(false);
 			PlayerManager.disablePlayers();
 			TimeManager.pauseTime();
