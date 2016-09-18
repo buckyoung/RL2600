@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | RL2600</title>
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+    <script src="TemplateData/UnityProgress.js"></script>
+  </head>
+  <body class="template">
+    <p class="header"><span>Unity WebGL Player | </span>RL2600</p>
+    <div class="template-wrap clear">
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="450px" width="800px"></canvas>
+      <br>
+      <div class="logo"></div>
+      <div class="fullscreen"><img src="TemplateData/fullscreen.png" width="38" height="38" alt="Fullscreen" title="Fullscreen" onclick="SetFullscreen(1);" /></div>
+      <div class="title">RL2600</div>
+    </div>
+    <p class="footer">&laquo; created with <a href="http://unity3d.com/" title="Go to unity3d.com">Unity</a> &raquo;</p>
+    <script type='text/javascript'>
+  var Module = {
+    TOTAL_MEMORY: 536870912,
+    errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
+    compatibilitycheck: null,
+    dataUrl: "Release/9.18.2016.9dc38.web.data",
+    codeUrl: "Release/9.18.2016.9dc38.web.js",
+    memUrl: "Release/9.18.2016.9dc38.web.mem",
+  };
+</script>
+<script src="Release/UnityLoader.js"></script>
+
+<div style="margin: 15px;">
+  <strong>INSTRUCTIONS:</strong>
+  <p>WSAD to move</p>
+  <p>Spacebar to boost</p>
+  <p>Red is AI</p>
+
+  <strong>BUILD:</strong>
+  <p>9.18.2016.9dc38.web</p>
+  <p>VERY-ALPHA</p>
+  <a href="./changelog.txt">Change Log</a>
+</div>
+
+  </body>
+</html>
