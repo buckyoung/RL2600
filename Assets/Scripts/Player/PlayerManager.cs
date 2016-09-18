@@ -12,7 +12,7 @@ namespace RL2600.System {
 		private static Vector3[] initialPositions = new Vector3[PlayerManager.getNumberOfPlayers()];
 		private static Quaternion[] initialRotations = new Quaternion[PlayerManager.getNumberOfPlayers()];
 
-		void Start() {
+		void Awake() {
 			GameObject playerContainer = GameObject.Find("PlayerContainer");
 			int i = 0;
 
@@ -63,6 +63,16 @@ namespace RL2600.System {
 			}
 
 			return false;
+		}
+
+		public static Team getPlayerTeam(int id) {
+			foreach (Player.Player script in playerScripts) {
+				if (script.id == id) {
+					return script.team;
+				}
+			}
+
+			return Team.BLUE;
 		}
 	}
 }

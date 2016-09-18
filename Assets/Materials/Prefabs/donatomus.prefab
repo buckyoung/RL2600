@@ -12,6 +12,7 @@ GameObject:
   - 50: {fileID: 5083424}
   - 60: {fileID: 6065030}
   - 114: {fileID: 11453762}
+  - 114: {fileID: 11474334}
   m_Layer: 0
   m_Name: donatomus
   m_TagString: Car
@@ -26,8 +27,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5000002, y: 0.32, z: -1}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,8 +81,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18a3111121cf4c8b80267909002c683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1200
-  startingAngle: 0
+--- !u!114 &11474334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e9f9fb2a26042d1b854594a8941c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21221780
 SpriteRenderer:
   m_ObjectHideFlags: 1
