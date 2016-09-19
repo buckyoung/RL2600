@@ -29,12 +29,12 @@ namespace RL2600.System {
 			}
 		}
 
+		// number of player on field
 		public static int getNumberOfPlayers() {
 			return numberOfPlayers;
 		}
-
-		// Used after a score
-		// Disables player movement
+			
+		// Disable player movement
 		public static void disablePlayers() {
 			for (int i = 0; i < PlayerManager.getNumberOfPlayers(); i++) {
 				playerScripts[i].enabled = false;
@@ -42,12 +42,14 @@ namespace RL2600.System {
 			}
 		}
 
+		// Allow movement
 		public static void enablePlayers() {
 			foreach (Player.Player script in playerScripts) {
 				script.enabled = true;
 			}
 		}
 
+		// Reset field position
 		public static void resetPlayers() {
 			for (int i = 0; i < PlayerManager.getNumberOfPlayers(); i++) {
 				playerCars[i].transform.position = initialPositions[i];
@@ -55,7 +57,8 @@ namespace RL2600.System {
 			}
 		}
 
-		public static bool checkIsAI(int id) {
+		// is this player an ai?
+		public static bool getIsAI(int id) {
 			foreach (Player.Player script in playerScripts) {
 				if (script.id == id) {
 					return script.isAI;
@@ -65,6 +68,7 @@ namespace RL2600.System {
 			return false;
 		}
 
+		// is this player on team red or blue?
 		public static Team getPlayerTeam(int id) {
 			foreach (Player.Player script in playerScripts) {
 				if (script.id == id) {

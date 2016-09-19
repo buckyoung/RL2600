@@ -6,7 +6,7 @@ namespace RL2600.System {
 		private static GUIText midfieldGUIText;
 
 		void Awake() {
-			GameObject midfield = GameObject.Find("Notify-midfield");
+			GameObject midfield = GameObject.Find("NotifyMidfield");
 			midfieldGUIText = midfield.GetComponent<GUIText>();
 		}
 
