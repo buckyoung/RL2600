@@ -15,6 +15,13 @@ namespace RL2600.Player {
 		}
 
 		void FixedUpdate() {
+			if (moveBehavior == null) {
+	            // Since the IMoveable component is added programatically to the
+		        // vehicle (in Car.cs->Start()), there is no good time to get this compoent
+                // except for during the first update cycle
+                moveBehavior = GetComponentInChildren<IMoveable>();
+	       	}
+			
 			moveBehavior.move();
 		}
 	}
