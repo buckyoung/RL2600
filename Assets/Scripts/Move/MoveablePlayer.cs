@@ -17,10 +17,6 @@ namespace RL2600.Behavior {
 			rb2d = GetComponent<Rigidbody2D>();
 		}
 
-		/*
-		 * User Functions
-		 */
-
 		public void move() {
 			var movement = new Vector2(Input.GetAxis(id + "_AXIS_X"), Input.GetAxis(id + "_AXIS_Y"));
 

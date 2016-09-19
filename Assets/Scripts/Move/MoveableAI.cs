@@ -43,12 +43,7 @@ namespace RL2600.Behavior {
 					i++;
 				}
 			}
-
 		}
-
-		/*
-		 * User Functions
-		 */
 
 		public void move() {
 			chooseTarget();
