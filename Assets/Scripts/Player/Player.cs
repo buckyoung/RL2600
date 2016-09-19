@@ -7,6 +7,16 @@ namespace RL2600.Player {
 		public int id = 1;
 		public bool isAI = false;
 		public Team team = Team.BLUE;
+
+		private IMoveable moveBehavior;
+
+		void Start() {
+			moveBehavior = GetComponentInChildren<IMoveable>();
+		}
+
+		void FixedUpdate() {
+			moveBehavior.move();
+		}
 	}
 
 	public enum Team {
