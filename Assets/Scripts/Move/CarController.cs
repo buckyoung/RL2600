@@ -8,7 +8,7 @@ namespace RL2600.Behavior {
 
 	public class CarController : MonoBehaviour, IMoveable {
 
-		public float acceleration = 70;
+		public float acceleration = 50;
 		public float steering = 6;
 
 		private Rigidbody2D rb;
