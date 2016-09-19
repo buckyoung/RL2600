@@ -6,7 +6,7 @@ namespace RL2600.Behavior {
 
 	[RequireComponent (typeof (Rigidbody2D))]
 
-	public class MoveablePlayerGas : MonoBehaviour {
+	public class MoveablePlayerGas : MonoBehaviour, IMoveable {
 		public float speed = 1200.0f;
 
 		private int id;
@@ -17,7 +17,7 @@ namespace RL2600.Behavior {
 			rb2d = GetComponent<Rigidbody2D>();
 		}
 
-		void FixedUpdate() {
+		public void move() {
 			// Gassing //
 			var input = new Vector2(Input.GetAxis(id + "_AXIS_X"), Input.GetAxis(id + "_AXIS_Y"));
 

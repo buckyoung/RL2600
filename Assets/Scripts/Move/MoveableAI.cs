@@ -6,7 +6,7 @@ namespace RL2600.Behavior {
 	
 	[RequireComponent (typeof (Rigidbody2D))]
 
-	public class MoveableAI : MonoBehaviour {
+	public class MoveableAI : MonoBehaviour, IMoveable {
 		private float speed = 1200.0f;
 
 		private int id;
@@ -45,7 +45,7 @@ namespace RL2600.Behavior {
 			}
 		}
 
-		void FixedUpdate () {
+		public void move() {
 			chooseTarget();
 
 			if (isWaiting) { return; }

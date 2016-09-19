@@ -6,7 +6,7 @@ namespace RL2600.Behavior {
 
 	// http://answers.unity3d.com/questions/686025/top-down-2d-car-physics-1.html
 
-	public class CarController : MonoBehaviour {
+	public class CarController : MonoBehaviour, IMoveable {
 
 		public float acceleration = 70;
 		public float steering = 6;
@@ -19,7 +19,7 @@ namespace RL2600.Behavior {
 			rb = GetComponent<Rigidbody2D>();
 		}
 
-		void FixedUpdate() {
+		public void move() {
 			float h = -Input.GetAxis(id + "_AXIS_X");
 			float v = Input.GetAxis(id + "_AXIS_Y");
 

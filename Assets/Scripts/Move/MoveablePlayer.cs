@@ -6,7 +6,7 @@ namespace RL2600.Behavior {
 
 	[RequireComponent (typeof (Rigidbody2D))]
 
-	public class MoveablePlayer : MonoBehaviour {
+	public class MoveablePlayer : MonoBehaviour, IMoveable {
 		private float speed = 1200.0f;
 
 		private int id;
@@ -17,7 +17,7 @@ namespace RL2600.Behavior {
 			rb2d = GetComponent<Rigidbody2D>();
 		}
 
-		void FixedUpdate() {
+		public void move() {
 			var movement = new Vector2(Input.GetAxis(id + "_AXIS_X"), Input.GetAxis(id + "_AXIS_Y"));
 
 			// Dont decrement boost or add force if not moving
