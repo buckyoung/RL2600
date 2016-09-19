@@ -24,7 +24,7 @@ namespace RL2600.Car {
 			if (PlayerManager.getIsAI(id)) {
 				gameObject.AddComponent<Behavior.MoveableAI>();
 			} else {
-				gameObject.AddComponent<Behavior.MoveablePlayer>();
+				gameObject.AddComponent<Behavior.CarController>();
 			}
 		}
 	}

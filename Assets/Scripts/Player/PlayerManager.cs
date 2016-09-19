@@ -18,7 +18,7 @@ namespace RL2600.System {
 
 			foreach (Transform child in playerContainer.transform) {
 				if (child != playerContainer.transform) {
-					playerCars[i] = child.GetChild(0).gameObject;
+					playerCars[i] = child.GetChild(0).gameObject; // NOTE: THIS IS FRAGILE -- CAR MUST BE POSITION 0
 					playerScripts[i] = child.GetComponent<Player.Player>();
 					rigidBodies[i] = child.GetComponentInChildren<Rigidbody2D>();
 					initialPositions[i] = child.GetChild(0).position;
@@ -37,7 +37,7 @@ namespace RL2600.System {
 		// Disable player movement
 		public static void disablePlayers() {
 			for (int i = 0; i < PlayerManager.getNumberOfPlayers(); i++) {
-				playerScripts[i].enabled = false;
+				playerScripts[i].enabled = false; // THIS NO LONGER STOPS THE MOVE FUNCTION FROM BEING CALLED... TODO BUCK
 				rigidBodies[i].velocity = Vector2.zero;
 			}
 		}
