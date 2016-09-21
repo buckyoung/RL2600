@@ -1,0 +1,15 @@
+9/21/2016
+(5e8e132) - web-2player - no AI, controller support, lighter ball, more powerful boost, ball & pickup materials
+
+9/18/2016 
+(9dc38) - web v3 - increase WebGL memory limit from 256 to 512
+
+9/17/2016 
+(7fb68) - web v2 - midfield notification system & new cars
+(5f473) - web v1 - ai mode
+
+9/16/2016 - scoring and lighting
+9/15/2016 - sprites and ai
+9/14/2016 - boosting
+9/13/2016 - scoreboard reporting & player rotation
+9/12/2016 - 2 player controls & physics
