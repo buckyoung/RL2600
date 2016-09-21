@@ -71,15 +71,15 @@ InputManager:
     joyNum: 2
   - serializedVersion: 3
     m_Name: 1_BTN
-    descriptiveName: keyboard
+    descriptiveName: keyboard&controller
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: space
+    positiveButton: joystick 1 button 17
     altNegativeButton: 
-    altPositiveButton: 
-    gravity: 2
-    dead: 5
-    sensitivity: 2
+    altPositiveButton: space
+    gravity: 0
+    dead: 0
+    sensitivity: 0
     snap: 0
     invert: 0
     type: 0
@@ -87,26 +87,26 @@ InputManager:
     joyNum: 1
   - serializedVersion: 3
     m_Name: 2_BTN
-    descriptiveName: keyboard
+    descriptiveName: keyboard&controller
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: right shift
+    positiveButton: joystick 2 button 17
     altNegativeButton: 
-    altPositiveButton: 
-    gravity: 2
-    dead: 5
-    sensitivity: 2
+    altPositiveButton: right shift
+    gravity: 0
+    dead: 0
+    sensitivity: 0
     snap: 0
     invert: 0
     type: 0
     axis: 0
     joyNum: 2
   - serializedVersion: 3
-    m_Name: 1_2
-    descriptiveName: keyboard
+    m_Name: 1_AXIS_X
+    descriptiveName: controller
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: right shift
+    positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
     gravity: 2
@@ -114,22 +114,54 @@ InputManager:
     sensitivity: 2
     snap: 0
     invert: 0
-    type: 0
+    type: 2
+    axis: 0
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: 1_AXIS_Y
+    descriptiveName: controller
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 2
+    dead: 5
+    sensitivity: 2
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 1
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: 2_AXIS_X
+    descriptiveName: controller
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 2
+    dead: 5
+    sensitivity: 2
+    snap: 0
+    invert: 0
+    type: 2
     axis: 0
     joyNum: 2
   - serializedVersion: 3
-    m_Name: 1_1
-    descriptiveName: keyboard
+    m_Name: 2_AXIS_Y
+    descriptiveName: controller
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: right shift
+    positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
     gravity: 2
     dead: 5
     sensitivity: 2
     snap: 0
-    invert: 0
-    type: 0
-    axis: 0
+    invert: 1
+    type: 2
+    axis: 1
     joyNum: 2

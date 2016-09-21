@@ -5,7 +5,7 @@ namespace RL2600.System {
 	public class BoostManager : MonoBehaviour {
 		private static float[] boosts = new float[PlayerManager.getNumberOfPlayers()];
 
-		private static float SPEED_MODIFIER = 1.8f;
+		private static float SPEED_MODIFIER = 2.2f;
 		private static int DECREASE_MODIFIER = 20;
 		private static float INCREASE_AMT = 35;
 		private static float START_AMT = 35;

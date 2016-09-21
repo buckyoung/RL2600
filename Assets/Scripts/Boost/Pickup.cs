@@ -8,14 +8,20 @@ namespace RL2600.Boost {
 	[RequireComponent (typeof (Renderer))]
 
 	public class Pickup : MonoBehaviour {
+		private bool isActive = true;
+
 		private Renderer r;
+		private Shader activeShader;
+		private Shader inactiveShader;
 
 		void Start () {
 			r = GetComponent<Renderer>();
+			activeShader = Shader.Find("Particles/Alpha Blended");
+			inactiveShader = Shader.Find("Particles/Multiply");
 		}
-		
+
 		void OnTriggerStay2D(Collider2D other) {
-			if (r.enabled && other.tag == "Car") {
+			if (isActive && other.tag == "Car") {
 				int id = other.gameObject.GetComponentInParent<Player.Player>().id;
 
 				if (BoostManager.pickupBoost(id)) {
@@ -29,12 +35,14 @@ namespace RL2600.Boost {
 		 */
 
 		private IEnumerator pickup() {
-			r.enabled = false;
+			isActive = false;
+			r.material.shader = inactiveShader;
 			yield return new WaitForSeconds(5);
 
 			// Leave the pickup off if the game has ended
 			if (!GameManager.getHasGameEnded()) {
-				r.enabled = true;
+				isActive = true;
+				r.material.shader = activeShader;
 			}
 		}
 	}
