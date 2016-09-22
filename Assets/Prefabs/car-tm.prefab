@@ -11,9 +11,9 @@ GameObject:
   - 212: {fileID: 21221780}
   - 50: {fileID: 5083424}
   - 60: {fileID: 6065030}
-  - 114: {fileID: 11458154}
+  - 114: {fileID: 11485510}
   m_Layer: 0
-  m_Name: sprngr
+  m_Name: car-tm
   m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -63,21 +63,15 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 0.7, y: -0.12}
-      - {x: 0.7, y: 0.17}
-      - {x: 0.53999996, y: 0.25}
-      - {x: 0.29999998, y: 0.25}
-      - {x: -0.040000018, y: 0.19999999}
-      - {x: -0.060000017, y: 0.25}
-      - {x: -0.28, y: 0.25}
-      - {x: -0.3, y: 0.22999999}
-      - {x: -0.3, y: -0.24}
-      - {x: -0.29000002, y: -0.25}
-      - {x: -0.040000018, y: -0.25}
-      - {x: 0.14999998, y: -0.19999999}
-      - {x: 0.38, y: -0.25}
-      - {x: 0.56, y: -0.25}
---- !u!114 &11458154
+    - - {x: -0.68, y: 0.25}
+      - {x: -0.7, y: 0.22999999}
+      - {x: -0.7, y: -0.24}
+      - {x: -0.69, y: -0.25}
+      - {x: 0.22, y: -0.25}
+      - {x: 0.29999998, y: -0.19}
+      - {x: 0.29999998, y: 0.19}
+      - {x: 0.19999999, y: 0.25}
+--- !u!114 &11485510
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -114,7 +108,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0dfb64fa2cd0146768685f32586348a4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1555f778de0ff4bccb94662560d70b78, type: 3}
   m_Color: {r: 0.125, g: 0.63793105, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

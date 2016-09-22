@@ -11,9 +11,9 @@ GameObject:
   - 212: {fileID: 21221780}
   - 50: {fileID: 5083424}
   - 60: {fileID: 6065030}
-  - 114: {fileID: 11486730}
+  - 114: {fileID: 11423818}
   m_Layer: 0
-  m_Name: scopecreep
+  m_Name: car-donatomus
   m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,22 +63,13 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 0.19999999, y: 0.225}
-      - {x: 0.049999997, y: 0.125}
-      - {x: -0.21, y: 0.145}
-      - {x: -0.48999998, y: 0.095}
-      - {x: -0.5, y: 0.065}
-      - {x: -0.5, y: -0.085}
-      - {x: -0.22, y: -0.155}
-      - {x: 0.049999997, y: -0.125}
-      - {x: 0.08, y: -0.095}
-      - {x: 0.19, y: -0.225}
-      - {x: 0.39999998, y: -0.225}
-      - {x: 0.48, y: -0.205}
-      - {x: 0.5, y: -0.185}
-      - {x: 0.5, y: 0.125}
-      - {x: 0.47, y: 0.225}
---- !u!114 &11486730
+    - - {x: 0.42, y: 0.275}
+      - {x: -0.51, y: 0.275}
+      - {x: -0.51, y: -0.275}
+      - {x: 0.51, y: -0.275}
+      - {x: 0.51, y: 0.265}
+      - {x: 0.5, y: 0.265}
+--- !u!114 &11423818
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -115,7 +106,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d18cf2fd9ba1043d0b8a777d932caa92, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c2fe8ab9889e745e6af69b60faaf6ac3, type: 3}
   m_Color: {r: 0.125, g: 0.63793105, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
