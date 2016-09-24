@@ -23,7 +23,12 @@ namespace RL2600.System {
 			PlayerManager.disablePlayers();
 			TimeManager.pauseTime();
 
-			game.initiateGoalReset();
+			// Do not reset after goal if its a win in OT
+			if (TimeManager.getHasRegulationEnded() && !ScoreManager.getIsTied()) {
+				endGame();
+			} else {
+				game.initiateGoalReset();
+			}
 		}
 
 		public static void resetAllAfterGoal() {
@@ -53,6 +58,13 @@ namespace RL2600.System {
 			BallManager.disableBall(false);
 			PlayerManager.disablePlayers();
 			TimeManager.pauseTime();
+		}
+
+		public static void onEndOfRegulation() {
+			// See if we should continue on into OT 
+			if (ScoreManager.getIsTied()) { return; }
+
+			GameManager.endGame();
 		}
 	}
 }

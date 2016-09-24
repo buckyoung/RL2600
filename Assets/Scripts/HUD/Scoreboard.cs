@@ -3,6 +3,7 @@ using System.Collections;
 using RL2600.Boost;
 using RL2600.Score;
 using RL2600.System;
+using RL2600.Player;
 
 namespace RL2600.HUD {
 
@@ -43,9 +44,9 @@ namespace RL2600.HUD {
 
 			GUI.Label(new Rect(w, y, w, h), getBoost(1), blueStyle);
 
-			GUI.Label(new Rect((Screen.width / 2) - (w*2), y, w, h), ScoreManager.getScore(1).ToString(), blueStyle);
+			GUI.Label(new Rect((Screen.width / 2) - (w*2), y, w, h), ScoreManager.getScore(Team.BLUE).ToString(), blueStyle);
 			GUI.Label(new Rect((Screen.width / 2) - (w / 2), y, w*2, h), TimeManager.getTime(), guiStyle);
-			GUI.Label(new Rect((Screen.width / 2) + (w*2), y, w, h), ScoreManager.getScore(2).ToString(), redStyle);
+			GUI.Label(new Rect((Screen.width / 2) + (w*2), y, w, h), ScoreManager.getScore(Team.RED).ToString(), redStyle);
 
 			GUI.Label(new Rect(Screen.width - w*2, y, w, h), getBoost(2), redStyle);
 

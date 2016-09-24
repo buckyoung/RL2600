@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RL2600.System;
 
 namespace RL2600.Scene {
 	public class SceneBuilder : MonoBehaviour {
 		void Awake() {
 			instantiateBall();
 			instantiatePickups();
+			instantiatePlayers();
 		}
 
 		// Instantiate a single ball in the center of the field
@@ -54,6 +56,17 @@ namespace RL2600.Scene {
 
 				xPos += xDist;
 			}
+		}
+
+		private void instantiatePlayers() {
+			float xPos = 0.0f;
+			float yPos = 0.9f; 
+			float zPos = 0.0f;
+
+			GameObject playerContainer = new GameObject("PlayerContainer");
+			GameObject[] players = new GameObject[PlayerManager.getNumberOfPlayers()];
+
+
 		}
 	}
 }

@@ -3,13 +3,13 @@ using System.Collections;
 
 namespace RL2600.System {
 	public class TimeManager : MonoBehaviour {
-		private static int minute = 3;
-		private static float second = 00;
+		private static int minute = 0;
+		private static float second = 7;
 		private static bool isPaused = false;
-		private static bool hasEnded = false;
+		private static bool hasRegulationEnded = false;
 
 		void Update() {
-			if (hasEnded || isPaused) { return; }
+			if (GameManager.getHasGameEnded() || isPaused) { return; }
 
 			float difference = Time.deltaTime;
 
@@ -22,7 +22,7 @@ namespace RL2600.System {
 			second -= difference;
 
 			checkNotify();
-			checkEndOfTime();
+			checkEndOfRegulation();
 		}
 
 		public static void pauseTime() {
@@ -45,15 +45,19 @@ namespace RL2600.System {
 			return reportMinute + ":" + wholeSecond.ToString("00");
 		}
 
+		public static bool getHasRegulationEnded() {
+			return hasRegulationEnded;
+		}
+
 		// Private
 
-		private static void checkEndOfTime() {
+		private static void checkEndOfRegulation() {
 			if (minute == 0 && second <= 0) {
 				minute = 0;
 				second = 0;
-				hasEnded = true;
+				hasRegulationEnded = true;
 
-				GameManager.endGame();
+				GameManager.onEndOfRegulation();
 			}
 		}
 
@@ -82,6 +86,10 @@ namespace RL2600.System {
 
 			if (wholeSecond <= 10) {
 				NotificationManager.notifyMidfield(wholeSecond.ToString());
+			}
+
+			if (wholeSecond == 0) {
+				NotificationManager.notifyMidfield("- SUDDEN DEATH -");
 			}
 		}
 	}
