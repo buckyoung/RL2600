@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using RL2600.Player;
+using RL2600.Settings;
 
 namespace RL2600.System {
 	public class PlayerManager : MonoBehaviour {
@@ -59,13 +60,7 @@ namespace RL2600.System {
 
 		// is this player an ai?
 		public static bool getIsAI(int id) {
-			foreach (Player.Player script in playerScripts) {
-				if (script.id == id) {
-					return script.isAI;
-				}
-			}
-
-			return false;
+			return PlaySettings.getIsAI(id);
 		}
 
 		// is this player on team red or blue?

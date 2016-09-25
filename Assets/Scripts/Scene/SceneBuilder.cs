@@ -59,12 +59,12 @@ namespace RL2600.Scene {
 		}
 
 		private void instantiatePlayers() {
-			float xPos = 0.0f;
-			float yPos = 0.9f; 
-			float zPos = 0.0f;
-
-			GameObject playerContainer = new GameObject("PlayerContainer");
-			GameObject[] players = new GameObject[PlayerManager.getNumberOfPlayers()];
+//			float xPos = 0.0f;
+//			float yPos = 0.9f; 
+//			float zPos = 0.0f;
+//
+//			GameObject playerContainer = new GameObject("PlayerContainer");
+//			GameObject[] players = new GameObject[PlayerManager.getNumberOfPlayers()];
 
 			// TODO spawn location WIP
 		}
