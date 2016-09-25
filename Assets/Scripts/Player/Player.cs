@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using RL2600.Behavior;
+using RL2600.Settings;
 
 namespace RL2600.Player {
 	public class Player : MonoBehaviour {
@@ -8,6 +9,11 @@ namespace RL2600.Player {
 		public Team team = Team.BLUE;
 
 		private IMoveable moveBehavior;
+
+		void Awake() {
+			GameObject car = (GameObject)Instantiate(Resources.Load(PlaySettings.getCarSelection(id)), this.transform.position, this.transform.rotation);
+			car.transform.parent = this.transform;
+		}
 
 		void Start() {
 			moveBehavior = GetComponentInChildren<IMoveable>();
