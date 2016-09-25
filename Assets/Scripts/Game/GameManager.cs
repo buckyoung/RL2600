@@ -59,7 +59,7 @@ namespace RL2600.System {
 			PlayerManager.disablePlayers();
 			TimeManager.pauseTime();
 
-//			game.initiateGameReset(); // TODO BUCK 
+//			game.initiateGameReset(); // TODO BUCK -- will need to do huge STATIC refactor before this will work
 		}
 
 		public static void onEndOfRegulation() {

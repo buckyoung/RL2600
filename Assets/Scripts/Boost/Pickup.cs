@@ -17,7 +17,7 @@ namespace RL2600.Boost {
 		void Start () {
 			r = GetComponent<Renderer>();
 			activeShader = Shader.Find("Particles/Alpha Blended");
-			inactiveShader = Shader.Find("Particles/Multiply");
+			inactiveShader = Shader.Find("Standard");
 		}
 
 		void OnTriggerStay2D(Collider2D other) {
