@@ -66,7 +66,7 @@ namespace RL2600.Scene {
 			GameObject playerContainer = new GameObject("PlayerContainer");
 			GameObject[] players = new GameObject[PlayerManager.getNumberOfPlayers()];
 
-
+			// TODO spawn location WIP
 		}
 	}
 }

@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/9.18-field.unity
+    path: Assets/Scenes/old.9.18-field.unity
   - enabled: 1
-    path: Assets/Scenes/9.21-two-play-field.unity
+    path: Assets/Scenes/old.9.21-two-play-field.unity

@@ -3,8 +3,8 @@ using System.Collections;
 
 namespace RL2600.System {
 	public class TimeManager : MonoBehaviour {
-		private static int minute = 0;
-		private static float second = 7;
+		private static int minute = 3;
+		private static float second = 00;
 		private static bool isPaused = false;
 		private static bool hasRegulationEnded = false;
 

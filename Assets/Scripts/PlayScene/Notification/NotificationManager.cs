@@ -3,11 +3,11 @@ using System.Collections;
 
 namespace RL2600.System {
 	public class NotificationManager : MonoBehaviour {
-		private static GUIText midfieldGUIText;
+		private static TextMesh midfieldGUIText;
 
 		void Awake() {
 			GameObject midfield = GameObject.Find("NotifyMidfield");
-			midfieldGUIText = midfield.GetComponent<GUIText>();
+			midfieldGUIText = midfield.GetComponent<TextMesh>();
 		}
 
 		public static void notifyMidfield(string text) {
