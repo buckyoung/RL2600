@@ -2,6 +2,7 @@
 	- Hotfixes 
 		- Bump resolution to 1024x576
 		- Set time back to 3 mins
+		- Fixed shader issue with inactive boost pickups
 
 09/25/2016 (c0a2ba8) web v0.3.0 
 	- New Features
