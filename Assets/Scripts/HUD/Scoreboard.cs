@@ -4,6 +4,7 @@ using RL2600.Boost;
 using RL2600.Score;
 using RL2600.System;
 using RL2600.Player;
+using RL2600.Settings;
 
 namespace RL2600.HUD {
 
@@ -46,9 +47,11 @@ namespace RL2600.HUD {
 
 			GUI.Label(new Rect((Screen.width / 2) - (w*2), y, w, h), ScoreManager.getScore(Team.BLUE).ToString(), blueStyle);
 			GUI.Label(new Rect((Screen.width / 2) - (w / 2), y, w*2, h), TimeManager.getTime(), guiStyle);
-			GUI.Label(new Rect((Screen.width / 2) + (w*2), y, w, h), ScoreManager.getScore(Team.RED).ToString(), redStyle);
 
-			GUI.Label(new Rect(Screen.width - w*2, y, w, h), getBoost(2), redStyle);
+			if (PlaySettings.NUM_PLAYERS == 2) { // TODO BUCK -- Very dumb and fragile
+				GUI.Label(new Rect((Screen.width / 2) + (w*2), y, w, h), ScoreManager.getScore(Team.RED).ToString(), redStyle);
+				GUI.Label(new Rect(Screen.width - w*2, y, w, h), getBoost(2), redStyle);
+			}
 
 		}
 
