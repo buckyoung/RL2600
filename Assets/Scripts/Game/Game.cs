@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace RL2600.System {
 	public class Game : MonoBehaviour {
@@ -11,6 +12,10 @@ namespace RL2600.System {
 
 		public void initiateGoalReset() {
 			StartCoroutine(waitAfterGoal());
+		}
+
+		public void initiateGameReset() {
+			StartCoroutine(waitAfterGame());
 		}
 
 		private IEnumerator waitAfterGoal() {
@@ -36,6 +41,17 @@ namespace RL2600.System {
 
 			yield return new WaitForSeconds(1);
 			NotificationManager.clearMidfield();
+		}
+
+		private IEnumerator waitAfterGame() {
+			yield return new WaitForSeconds(3);
+			NotificationManager.notifyMidfield("Resetting!");
+			yield return new WaitForSeconds(1);
+
+			Destroy(GameObject.Find("_GameSettings"));
+
+			SceneManager.UnloadScene(1);
+			SceneManager.LoadScene(0);
 		}
 	}
 }

@@ -58,6 +58,8 @@ namespace RL2600.System {
 			BallManager.disableBall(false);
 			PlayerManager.disablePlayers();
 			TimeManager.pauseTime();
+
+//			game.initiateGameReset(); // TODO BUCK 
 		}
 
 		public static void onEndOfRegulation() {

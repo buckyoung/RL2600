@@ -10,6 +10,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/old.9.21-two-play-field.unity
   - enabled: 1
-    path: Assets/Scenes/9.24-MENUS.unity
+    path: Assets/Scenes/0-MENUS-9.25.unity
   - enabled: 1
-    path: Assets/Scenes/9.22-FIELD.unity
+    path: Assets/Scenes/1-FIELD-9.22.unity
