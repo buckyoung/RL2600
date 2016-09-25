@@ -1,0 +1,35 @@
+09/25/2016 (c0a2ba8) web v0.3.0 
+	- New Features
+		- Sudden death!
+		- Game setup screen with car chooser and AI settings!
+	- Other stuff 
+		- Drive on top of midfield notification... ball is still under the words tho :(
+	- Bug Fixes
+		- ScoreManager is now based on number of teams not number of players
+
+09/21/2016 (5e8e132) web-2player v0.2.2 
+	- no AI, controller support, lighter ball, more powerful boost, ball & pickup materials
+
+09/18/2016 (9dc38) web v0.2.1 
+	- increase WebGL memory limit from 256 to 512
+
+09/17/2016 (7fb68) web v0.2.0 
+	- midfield notification system & new cars
+
+09/17/2016 (5f473) web v0.1.0 
+	- ai mode
+
+09/16/2016
+	- scoring and lighting
+
+09/15/2016
+	- sprites and ai
+
+09/14/2016
+	- boosting
+
+09/13/2016
+	- scoreboard reporting & player rotation
+
+09/12/2016
+	- 2 player controls & physics
