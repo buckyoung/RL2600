@@ -30,7 +30,7 @@ namespace RL2600.Scene {
 
 			float xDist = 7.8f;
 			float xPos = -xDist;
-			float yPos = 3.8f; 
+			float yPos;
 			float zPos = 2.0f;
 
 			GameObject pickupContainer = new GameObject("PickupContainer");
@@ -38,18 +38,29 @@ namespace RL2600.Scene {
 
 			// Top row
 			for (int i = 0; i < 3; i++) {
+				if (i == 1) { // center up some
+					yPos = 4.2f;
+				} else {
+					yPos = 3.8f;
+				}
+
 				pickup = (GameObject)Instantiate(Resources.Load("pickup"), new Vector3(xPos, yPos, zPos), Quaternion.identity);
 				pickup.transform.parent = pickupContainer.transform;
 				pickup.name = "Pickup" + names[i];
 
 				xPos += xDist;
 			}
-
-			yPos = -2.3f;
+				
 			xPos = -xDist;
 
 			// Bottom row
 			for (int i = 3; i < 6; i++) {
+				if (i == 4) { // center down some
+					yPos = -2.7f;
+				} else {
+					yPos = -2.3f;
+				}
+
 				pickup = (GameObject)Instantiate(Resources.Load("pickup"), new Vector3(xPos, yPos, zPos), Quaternion.identity);
 				pickup.transform.parent = pickupContainer.transform;
 				pickup.name = "Pickup" + names[i];
