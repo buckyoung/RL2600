@@ -6,6 +6,7 @@ using RL2600.System;
 namespace RL2600.Settings {
 	public class PlaySettings : MonoBehaviour {
 		public const int NUM_PLAYERS = 2;
+
 		public const int INITIAL_MINUTE = 3;
 		public const float INITIAL_SECOND = 00;
 
