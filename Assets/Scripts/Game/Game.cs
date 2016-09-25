@@ -44,13 +44,16 @@ namespace RL2600.System {
 		}
 
 		private IEnumerator waitAfterGame() {
-			yield return new WaitForSeconds(3);
-			NotificationManager.notifyMidfield("Resetting!");
+			yield return new WaitForSeconds(2);
+			NotificationManager.notifyMidfield("Resetting in 3");
+			yield return new WaitForSeconds(1);
+			NotificationManager.notifyMidfield("Resetting in 2");
+			yield return new WaitForSeconds(1);
+			NotificationManager.notifyMidfield("Resetting in 1");
 			yield return new WaitForSeconds(1);
 
 			Destroy(GameObject.Find("_GameSettings"));
 
-			SceneManager.UnloadScene(1);
 			SceneManager.LoadScene(0);
 		}
 	}

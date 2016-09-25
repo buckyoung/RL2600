@@ -5,15 +5,15 @@ using RL2600.Settings;
 
 namespace RL2600.System {
 	public class PlayerManager : MonoBehaviour {
-		private static int numberOfPlayers = 2;
-
-		private static GameObject[] playerCars = new GameObject[PlayerManager.getNumberOfPlayers()];
-		private static Player.Player[] playerScripts = new Player.Player[PlayerManager.getNumberOfPlayers()];
-		private static Rigidbody2D[] rigidBodies = new Rigidbody2D[PlayerManager.getNumberOfPlayers()];
-		private static Vector3[] initialPositions = new Vector3[PlayerManager.getNumberOfPlayers()];
-		private static Quaternion[] initialRotations = new Quaternion[PlayerManager.getNumberOfPlayers()];
+		private static GameObject[] playerCars;
+		private static Player.Player[] playerScripts;
+		private static Rigidbody2D[] rigidBodies;
+		private static Vector3[] initialPositions;
+		private static Quaternion[] initialRotations;
 
 		void Awake() {
+			initializeFields();
+
 			GameObject playerContainer = GameObject.Find("PlayerContainer");
 			int i = 0;
 
@@ -43,14 +43,9 @@ namespace RL2600.System {
 			}
 		}
 
-		// number of player on field
-		public static int getNumberOfPlayers() {
-			return numberOfPlayers;
-		}
-			
 		// Disable player movement
 		public static void disablePlayers() {
-			for (int i = 0; i < PlayerManager.getNumberOfPlayers(); i++) {
+			for (int i = 0; i < PlaySettings.NUM_PLAYERS; i++) {
 				playerScripts[i].enabled = false;
 				rigidBodies[i].velocity = Vector2.zero;
 			}
@@ -65,7 +60,7 @@ namespace RL2600.System {
 
 		// Reset field position
 		public static void resetPlayers() {
-			for (int i = 0; i < PlayerManager.getNumberOfPlayers(); i++) {
+			for (int i = 0; i < PlaySettings.NUM_PLAYERS; i++) {
 				playerCars[i].transform.position = initialPositions[i];
 				playerCars[i].transform.rotation = initialRotations[i];
 			}
@@ -85,6 +80,14 @@ namespace RL2600.System {
 			}
 
 			return Team.BLUE;
+		}
+
+		private static void initializeFields() {
+			playerCars = new GameObject[PlaySettings.NUM_PLAYERS];
+			playerScripts = new Player.Player[PlaySettings.NUM_PLAYERS];
+			rigidBodies = new Rigidbody2D[PlaySettings.NUM_PLAYERS];
+			initialPositions = new Vector3[PlaySettings.NUM_PLAYERS];
+			initialRotations = new Quaternion[PlaySettings.NUM_PLAYERS];
 		}
 	}
 }

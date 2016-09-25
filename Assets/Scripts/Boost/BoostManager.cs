@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RL2600.Settings;
 
 namespace RL2600.System {
 	public class BoostManager : MonoBehaviour {
-		private static float[] boosts = new float[PlayerManager.getNumberOfPlayers()];
+		private static float[] boosts;
 
-		private static float SPEED_MODIFIER = 2.2f;
-		private static int DECREASE_MODIFIER = 20;
-		private static float INCREASE_AMT = 35;
-		private static float START_AMT = 35;
+		private const float SPEED_MODIFIER = 2.2f;
+		private const int DECREASE_MODIFIER = 20;
+		private const float INCREASE_AMT = 35;
+		private const float START_AMT = 35;
 
 		void Start() {
-			resetBoosts();
+			initializeFields();
 		}
 
 		/*
@@ -61,6 +62,11 @@ namespace RL2600.System {
 		}
 
 		// Private 
+
+		private static void initializeFields() {
+			boosts = new float[PlaySettings.NUM_PLAYERS];
+			resetBoosts();
+		}
 
 		private static void decrementBoost(int id) {
 			int index = id - 1;

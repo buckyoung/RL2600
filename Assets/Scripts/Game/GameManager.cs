@@ -5,9 +5,11 @@ namespace RL2600.System {
 	public class GameManager : MonoBehaviour {
 		private static Game game;
 
-		private static bool hasGameEnded = false;
+		private static bool hasGameEnded;
 
 		void Start() {
+			initializeFields();
+
 			GameObject system = GameObject.Find("System");
 			game = system.GetComponent<Game>();
 
@@ -59,7 +61,7 @@ namespace RL2600.System {
 			PlayerManager.disablePlayers();
 			TimeManager.pauseTime();
 
-//			game.initiateGameReset(); // TODO BUCK -- will need to do huge STATIC refactor before this will work
+			game.initiateGameReset(); // TODO BUCK -- will need to do huge STATIC refactor before this will work
 		}
 
 		public static void onEndOfRegulation() {
@@ -67,6 +69,10 @@ namespace RL2600.System {
 			if (ScoreManager.getIsTied()) { return; }
 
 			GameManager.endGame();
+		}
+
+		private static void initializeFields() {
+			hasGameEnded = false;
 		}
 	}
 }

@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RL2600.Settings;
 
 namespace RL2600.System {
 	public class TimeManager : MonoBehaviour {
-		private static int minute = 3;
-		private static float second = 00;
-		private static bool isPaused = false;
-		private static bool hasRegulationEnded = false;
+		private static int minute;
+		private static float second;
+		private static bool isPaused;
+		private static bool hasRegulationEnded;
+
+		void Start() {
+			initializeFields();
+		}
 
 		void Update() {
 			if (GameManager.getHasGameEnded() || isPaused) { return; }
@@ -91,6 +96,13 @@ namespace RL2600.System {
 			if (wholeSecond == 0) {
 				NotificationManager.notifyMidfield("- SUDDEN DEATH -");
 			}
+		}
+
+		private static void initializeFields() {
+			minute = PlaySettings.INITIAL_MINUTE;
+			second = PlaySettings.INITIAL_SECOND;
+			hasRegulationEnded = false;
+			isPaused = false;
 		}
 	}
 }

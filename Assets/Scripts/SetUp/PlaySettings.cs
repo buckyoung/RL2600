@@ -5,19 +5,20 @@ using RL2600.System;
 
 namespace RL2600.Settings {
 	public class PlaySettings : MonoBehaviour {
-		private static bool[] isAI = new bool[PlayerManager.getNumberOfPlayers()];
-		private static string[] carSelection = new string[PlayerManager.getNumberOfPlayers()];
+		public const int NUM_PLAYERS = 2;
+		public const int INITIAL_MINUTE = 0;
+		public const float INITIAL_SECOND = 03;
 
-		private static int ID = 1;
+		private static string[] carSelection;
+		private static bool[] isAI;
+		private static int ID;
 
 		private static string[] cars = {"car-donatomus", "car-scopecreep", "car-sprngr", "car-tm"};
 
 		void Awake() {
 			DontDestroyOnLoad(this);
 
-			for (int i = 0; i < carSelection.Length; i++) {
-				carSelection[i] = cars[0];
-			}
+			initializeFields();
 		}
 
 		public void setID(int value) {
@@ -38,6 +39,16 @@ namespace RL2600.Settings {
 
 		public static string getCarSelection(int id) {
 			return carSelection[id - 1];
+		}
+
+		private static void initializeFields() {
+			carSelection = new string[NUM_PLAYERS];
+			isAI = new bool[NUM_PLAYERS];
+			ID = 1;
+
+			for (int i = 0; i < carSelection.Length; i++) {
+				carSelection[i] = cars[0];
+			}
 		}
 	}
 }
