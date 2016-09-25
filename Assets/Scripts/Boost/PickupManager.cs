@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using RL2600.Boost;
 
 namespace RL2600.System {
     public class PickupManager : MonoBehaviour {
-        private static Renderer[] pickupRenderers = new Renderer[6];
+		private static Pickup[] pickupScripts = new Pickup[6];
 
         void Start() {
             GameObject pickupContainer = GameObject.Find("PickupContainer");
@@ -11,14 +12,14 @@ namespace RL2600.System {
 
             foreach (Transform child in pickupContainer.transform) {
                 if (child != pickupContainer.transform) {
-					pickupRenderers[i++] = child.GetComponent<Renderer>();
+					pickupScripts[i++] = child.GetComponent<Pickup>();
                 }
             }
         }
 
         public static void resetPickups() {
-			foreach (Renderer r in pickupRenderers) {
-                r.enabled = true;
+			foreach (Pickup p in pickupScripts) {
+				p.setIsActive(true);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using RL2600.System;
+using RL2600.Boost;
 
 namespace RL2600.Behavior {
 	
@@ -15,7 +16,7 @@ namespace RL2600.Behavior {
 		private GameObject ball;
 		private GameObject pickups;
 		private GameObject[] boostPads = new GameObject[6];
-		private Renderer[] boostPadRenderers = new Renderer[6];
+		private Pickup[] boostPadPickupScripts = new Pickup[6];
 		private GameObject target;
 
 		private int boostPadIndex = 0;
@@ -38,7 +39,7 @@ namespace RL2600.Behavior {
 			foreach (Transform child in pickups.transform) {
 				if (child != pickups.transform){
 					boostPads[i] = child.gameObject;
-					boostPadRenderers[i] = child.GetComponent<Renderer>();
+					boostPadPickupScripts[i] = child.GetComponent<Pickup>();
 
 					i++;
 				}
@@ -85,7 +86,7 @@ namespace RL2600.Behavior {
 		private void chooseTarget() {
 			if (BoostManager.getBoost(id) < boostThreshold) {
 				// Pick another pad (clockwise -1) if target pad is not enabledds
-				if (!boostPadRenderers[boostPadIndex].enabled) {
+				if (!boostPadPickupScripts[boostPadIndex].getIsActive()) {
 					boostPadIndex = (boostPadIndex + 1) % 6;
 				}
 

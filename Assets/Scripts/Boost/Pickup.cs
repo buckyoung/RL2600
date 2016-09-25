@@ -30,6 +30,18 @@ namespace RL2600.Boost {
 			}
 		}
 
+		public bool getIsActive() {
+			return isActive;
+		}
+
+		public void setIsActive(bool value) {
+			isActive = value;
+
+			if (value) {
+				r.material.shader = activeShader;
+			}
+		}
+
 		/*
 		 * User functions
 		 */
