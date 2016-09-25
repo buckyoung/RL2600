@@ -1,0 +1,71 @@
+================
+===== v0.3 =====
+================
+v0.3.2 9.25.2016 (4d1a6b6)
+	New Features
+		- Game automatically resets 5 seconds after game-over
+		- Car, ball, and boost pickup graphics & hitboxes are now 20% smaller
+
+	Other Stuff
+		- Reinitialize all managers on scene transition
+
+	Hot Fixes
+		- Bump web memory limit from 512 to 640
+
+	Bug Fixes
+		- Pickups now reset on kickoff
+		- AI no longer initially targets inactive boost pickups
+
+v0.3.1 9.25.2016 (c0a2ba8)
+	Hot Fixes 
+		- Bump resolution to 1024x576
+		- Set time back to 3 mins
+		- Fixed shader issue with inactive boost pickups
+
+v0.3.0 9.25.2016 (c0a2ba8)
+	New Features
+		- Sudden death!
+		- Game setup screen with car chooser and AI settings!
+
+	Other Stuff 
+		- Introducing: SceneBuilder! *Programmatically* set up the entire play field  
+		- Drive on top of midfield notification... ball is still under the words tho :(
+
+	Bug Fixes
+		- ScoreManager is now based on number of teams not number of players
+
+================
+===== v0.2 =====
+================
+v0.2.2 9.21.2016 (5e8e132)
+	- no AI, controller support, lighter ball, more powerful boost, ball & pickup materials
+
+v0.2.1 9.18.2016 (9dc38)
+	- increase WebGL memory limit from 256 to 512
+
+v0.2.0 9.17.2016 (7fb68)
+	- midfield notification system & new cars
+
+================
+===== v0.1 =====
+================
+v0.1.0 9.17.2016 (5f473)
+	- ai mode
+
+================
+===== v0.0 =====
+================
+9.16.2016
+	- scoring and lighting
+
+9.15.2016
+	- sprites and ai
+
+9.14.2016
+	- boosting
+
+9.13.2016
+	- scoreboard reporting & player rotation
+
+9.12.2016
+	- 2 player controls & physics
