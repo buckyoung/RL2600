@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using RL2600.System;
+using RL2600.Settings;
 
 namespace RL2600.Scene {
 	public class SceneBuilder : MonoBehaviour {
 		void Awake() {
+			// Enable execute anywhere
+			if (GameObject.Find("_GameSettings") == null) {
+				Instantiate(Resources.Load("_GameSettings"), Vector3.zero, Quaternion.identity);
+			}
+
+			// Setup scene
 			instantiateBall();
 			instantiatePickups();
 			instantiatePlayers();
