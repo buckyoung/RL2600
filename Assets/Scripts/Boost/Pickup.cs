@@ -42,9 +42,7 @@ namespace RL2600.Boost {
 			}
 		}
 
-		/*
-		 * User functions
-		 */
+		// private 
 
 		private IEnumerator pickup() {
 			isActive = false;
@@ -53,6 +51,17 @@ namespace RL2600.Boost {
 
 			// Leave the pickup off if the game has ended
 			if (!GameManager.getHasGameEnded()) {
+				// Leave the pickup off while time is paused
+				while (TimeManager.getIsPaused()) {
+					// NOTE: This is an imperfect solution. A player could
+					// 1) pick up a boost pad at time T and immediately pause the game,
+					// 2) wait until time T+d where d is the delay in time while a 
+					// boost pad replenishes and 3) unpause the game... in this case,
+					// the boost will _immediately_ replenish in the eyes 
+					// of the car
+					yield return null; 
+				}
+
 				isActive = true;
 				r.material.shader = activeShader;
 			}

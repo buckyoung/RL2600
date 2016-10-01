@@ -42,6 +42,7 @@ namespace RL2600.System {
 		public static bool pickupBoost(int id) {
 			int index = id - 1;
 
+			// Do not pick up if boost is full
 			if (boosts[index] >= 100.0f) {
 				return false;
 			} 

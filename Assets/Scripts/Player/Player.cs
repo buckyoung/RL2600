@@ -11,8 +11,12 @@ namespace RL2600.Player {
 		private IMoveable moveBehavior;
 
 		void Awake() {
-			GameObject car = (GameObject)Instantiate(Resources.Load(PlaySettings.getCarSelection(id)), this.transform.position, this.transform.rotation);
-			car.transform.parent = this.transform;
+			string carSelection = PlaySettings.getCarSelection(id);
+
+			if (carSelection != null) {
+				GameObject car = (GameObject)Instantiate(Resources.Load(carSelection), this.transform.position, this.transform.rotation);
+				car.transform.parent = this.transform;
+			}
 		}
 
 		void Start() {

@@ -30,11 +30,15 @@ namespace RL2600.System {
 			checkEndOfRegulation();
 		}
 
-		public static void pauseTime() {
+		public static void pause() {
+			BallManager.disableBall();
+			PlayerManager.disablePlayers();
 			isPaused = true;
 		}
 
-		public static void unpauseTime() {
+		public static void unpause() {
+			BallManager.enableBall();
+			PlayerManager.enablePlayers();
 			isPaused = false;
 		}
 
@@ -48,6 +52,10 @@ namespace RL2600.System {
 			}
 
 			return reportMinute + ":" + wholeSecond.ToString("00");
+		}
+
+		public static bool getIsPaused() {
+			return isPaused;
 		}
 
 		public static bool getHasRegulationEnded() {

@@ -19,15 +19,14 @@ namespace RL2600.System {
 		}
 
 		// Used after a score
-		// Disables ball collisions & makes ball invisible if disableRenderer is true
-		public static void disableBall(bool disableRenderer = true) {
+		// Disables ball collisions
+		public static void disableBall() {
 			ballCol.enabled = false;
-
 			ballRb2d.velocity = Vector2.zero;
+		}
 
-			if (disableRenderer) {
-				ballRenderer.enabled = false;
-			}
+		public static void hideBall() {
+			ballRenderer.enabled = false;
 		}
 
 		public static void enableBall() {

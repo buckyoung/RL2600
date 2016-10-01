@@ -13,17 +13,14 @@ namespace RL2600.System {
 			GameObject system = GameObject.Find("System");
 			game = system.GetComponent<Game>();
 
-			BallManager.disableBall(false);
-			PlayerManager.disablePlayers();
-			TimeManager.pauseTime();
+			TimeManager.pause();
 
 			game.initiateKickoff();
 		}
 
 		public static void score() {
-			BallManager.disableBall();
-			PlayerManager.disablePlayers();
-			TimeManager.pauseTime();
+			BallManager.hideBall();
+			TimeManager.pause();
 
 			// Do not reset after goal if its a win in OT
 			if (TimeManager.getHasRegulationEnded() && !ScoreManager.getIsTied()) {
@@ -39,13 +36,11 @@ namespace RL2600.System {
 			BoostManager.resetBoosts();
 			PickupManager.resetPickups();
 
-			BallManager.enableBall(); // Unhide ball after its position is reset
+			BallManager.enableBall();
 		}
 
 		public static void renableOnKickoff() {
-			BallManager.enableBall();
-			PlayerManager.enablePlayers();
-			TimeManager.unpauseTime();
+			TimeManager.unpause();
 		}
 
 		public static bool getHasGameEnded() {
@@ -57,11 +52,9 @@ namespace RL2600.System {
 
 			NotificationManager.notifyMidfield("GAME OVER");
 
-			BallManager.disableBall(false);
-			PlayerManager.disablePlayers();
-			TimeManager.pauseTime();
+			TimeManager.pause();
 
-			game.initiateGameReset(); // TODO BUCK -- will need to do huge STATIC refactor before this will work
+			game.initiateGameReset();
 		}
 
 		public static void onEndOfRegulation() {
