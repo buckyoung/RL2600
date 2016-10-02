@@ -24,6 +24,18 @@ namespace RL2600.System {
 			return scores[(int)Team.BLUE] == scores[(int)Team.RED];
 		}
 
+		public static void notifyWinner() {
+			if (getIsTied()) {
+				NotificationManager.notifyMidfield("DRAW!");
+			} else {
+				NotificationManager.notifyMidfield(getWinner() + " WINS!");
+			}
+		}
+
+		private static string getWinner() {
+			return scores[(int)Team.BLUE] > scores[(int)Team.RED] ? Team.BLUE.ToString() : Team.RED.ToString();
+		}
+
 		private static void initializeFields() {
 			scores = new int[(int)Team.RED + 1];
 		}

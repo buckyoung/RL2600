@@ -7,8 +7,8 @@ namespace RL2600.Settings {
 	public class PlaySettings : MonoBehaviour {
 		public const int NUM_PLAYERS = 2;
 
-		public const int INITIAL_MINUTE = 3;
-		public const float INITIAL_SECOND = 00;
+		public const int INITIAL_MINUTE = 0;
+		public const float INITIAL_SECOND = 10;
 
 		private static string[] carSelection;
 		private static bool[] isAI;

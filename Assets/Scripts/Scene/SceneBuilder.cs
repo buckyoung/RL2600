@@ -8,7 +8,8 @@ namespace RL2600.Scene {
 		void Awake() {
 			// Enable execute anywhere
 			if (GameObject.Find("_GameSettings") == null) {
-				Instantiate(Resources.Load("_GameSettings"), Vector3.zero, Quaternion.identity);
+				GameObject o = (GameObject)Instantiate(Resources.Load("_GameSettings"), Vector3.zero, Quaternion.identity);
+				o.name = "_GameSettings";
 			}
 
 			// Setup scene

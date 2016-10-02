@@ -4,8 +4,6 @@ using UnityEngine.SceneManagement;
 
 namespace RL2600.System {
 	public class Game : MonoBehaviour {
-		private int afterGoalWait = 1;
-
 		public void initiateKickoff() {
 			StartCoroutine(kickoffCountdown());
 		}
@@ -15,17 +13,19 @@ namespace RL2600.System {
 		}
 
 		public void initiateGameReset() {
-			StartCoroutine(waitAfterGame());
+			StartCoroutine(waitForLastHit());
 		}
 
 		private IEnumerator waitAfterGoal() {
 			NotificationManager.notifyMidfield("GOAL!");
-			yield return new WaitForSeconds(afterGoalWait);
-			NotificationManager.clearMidfield();
+			yield return new WaitForSeconds(1);
 
-			GameManager.resetAllAfterGoal();
-
-			StartCoroutine(kickoffCountdown());
+			// Check if the game has ended in the past 1 second before resetting
+			if (!GameManager.getHasGameEnded()) { 
+				NotificationManager.clearMidfield();
+				GameManager.resetAllAfterGoal();
+				StartCoroutine(kickoffCountdown());
+			}
 		}
 
 		private IEnumerator kickoffCountdown() {
@@ -43,10 +43,15 @@ namespace RL2600.System {
 			NotificationManager.clearMidfield();
 		}
 
+		private IEnumerator waitForLastHit() {
+			yield return new WaitUntil(() => BallManager.getIsStopped() == true);
+
+			StartCoroutine(waitAfterGame());
+		}
+
 		private IEnumerator waitAfterGame() {
-			yield return new WaitForSeconds(2);
-			NotificationManager.notifyMidfield("Resetting in 3");
-			yield return new WaitForSeconds(1);
+			ScoreManager.notifyWinner();
+			yield return new WaitForSeconds(3);
 			NotificationManager.notifyMidfield("Resetting in 2");
 			yield return new WaitForSeconds(1);
 			NotificationManager.notifyMidfield("Resetting in 1");

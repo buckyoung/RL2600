@@ -23,6 +23,9 @@ namespace RL2600.System {
 		public static void disableBall() {
 			ballCol.enabled = false;
 			ballRb2d.velocity = Vector2.zero;
+			ballRb2d.inertia = 0;
+			ballRb2d.angularVelocity = 0;
+			ballRb2d.rotation = 0;
 		}
 
 		public static void hideBall() {
@@ -36,6 +39,10 @@ namespace RL2600.System {
 
 		public static void resetBall() {
 			ball.transform.position = initialPosition;
+		}
+
+		public static bool getIsStopped() {
+			return ballRb2d.IsSleeping() || !ballCol.enabled;
 		}
 	}
 }

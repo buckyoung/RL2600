@@ -42,6 +42,13 @@ namespace RL2600.System {
 			isPaused = false;
 		}
 
+		// Allow ball to keep moving to support the
+		// "one final hit" feature
+		public static void endGamePause() {
+			PlayerManager.disablePlayers();
+			isPaused = true;
+		}
+
 		public static string getTime() {
 			int wholeSecond = Mathf.CeilToInt(second);
 			int reportMinute = minute;

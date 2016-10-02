@@ -22,8 +22,10 @@ namespace RL2600.System {
 			BallManager.hideBall();
 			TimeManager.pause();
 
-			// Do not reset after goal if its a win in OT
-			if (TimeManager.getHasRegulationEnded() && !ScoreManager.getIsTied()) {
+			bool hasScoredInOT = TimeManager.getHasRegulationEnded() && !ScoreManager.getIsTied();
+
+			// Do not reset after goal if its a win in OT or a score because of a last hit
+			if (hasScoredInOT || hasGameEnded) {
 				endGame();
 			} else {
 				game.initiateGoalReset();
@@ -50,9 +52,11 @@ namespace RL2600.System {
 		public static void endGame() {
 			hasGameEnded = true; 
 
-			NotificationManager.notifyMidfield("GAME OVER");
+			if (!BallManager.getIsStopped()) {
+				NotificationManager.notifyMidfield("Final attempt!");
+			}
 
-			TimeManager.pause();
+			TimeManager.endGamePause();
 
 			game.initiateGameReset();
 		}
