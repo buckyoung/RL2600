@@ -13,6 +13,7 @@ namespace RL2600.Behavior {
 		const float C_DRAG = 0.4257f;
 		const float C_RR = 2.0f; // rolling-resistance // "SHOULD BE APPROX 30x C_DRAG" -- but be prepared to fine-tune TODO
 		const float C_CS = 2.0f; // corning-stiffness
+		const float C_BRAKE = 2.0f; // braking constant
 
 		private int id;
 		private Rigidbody2D rb2d;
@@ -41,26 +42,26 @@ namespace RL2600.Behavior {
 			// 1. Transform velocity in world reference frame to velocity in car reference frame 
 			//    (Vx = Vlong, Vy = Vlat). Convention for car reference frame: 
 			//    x – pointing to the front, z – pointing to the right
-			Vector2 velocity = (Vector2)transform.InverseTransformVector(rb2d.velocity);
+//			Vector2 velocity = (Vector2)transform.InverseTransformVector(rb2d.velocity);
 
 			// 2. Compute the slip angles for front and rear wheels (equation 5.2)
 			//    αfront = arctan((Vlat + ω * b) / Vlong)) – σ * sgn(Vlong) 
 			//    αrear = arctan((Vlat - ω * c) / Vlong))
-			var slipAngleFront = Mathf.Atan((velocity.y) + w * b / velocity.x) - steeringAngle * Mathf.Sign(velocity.x);
-			var slipAngleRear = Mathf.Atan((velocity.y) - w * c / velocity.x);
+//9			var slipAngleFront = Mathf.Atan((velocity.y) + w * b / velocity.x) - steeringAngle * Mathf.Sign(velocity.x);
+//			var slipAngleRear = Mathf.Atan((velocity.y) - w * c / velocity.x);
 
 			// 3. Compute Flat = Ca * slip angle (do for both rear and front wheels)
-			var F_latFront = slipAngleFront * C_CS;
-			var F_latRear = slipAngleRear * C_CS;
+//			var F_latFront = slipAngleFront * C_CS;
+//			var F_latRear = slipAngleRear * C_CS;
 
 			// 4. Cap Flat to maximum normalized frictional force (do for both rear and front wheels)
 			// TODO: cap due to max torque an engine can put out at a given RPM? ...no that seems to be #7...
-			var F_capFront = F_latFront; // TODO CAP THIS
-			var F_capRear = F_latRear; // TODO CAP THIS
+//			var F_capFront = F_latFront; // TODO CAP THIS
+//			var F_capRear = F_latRear; // TODO CAP THIS
 
 			// 5. Multiply Flat by the load (do for both rear and front wheels) to obtain the cornering forces.
-			var F_cornFront = F_capFront * 0.5f; // TODO is .5 good?
-			var F_cornRear = F_capRear * 0.5f; // TODO is .5 good?
+//			var F_cornFront = F_capFront * 0.5f; // TODO is .5 good?
+//			var F_cornRear = F_capRear * 0.5f; // TODO is .5 good?
 
 //			6. Compute the engine turn over rate Ωe = Vx 60*gk*G / (2π * rw)
 //			7. Clamp the engine turn over rate from 6 to the defined redline
@@ -80,18 +81,18 @@ namespace RL2600.Behavior {
 			// 15-17 compute total resistance 
 			var F_rr = 0; // TODO
 			var F_drag = 0; // TODO
-			Vector2 F_resistance = F_rr + F_drag;
+//			Vector2 F_resistance = F_rr + F_drag;
 
 			// 18. Sum the force on the car body
 			//     Fx = Ftraction + Flat,front * sin (σ) * Fresistance,x
 			//     Fz = Flat, rear + Flat,front * cos (σ) * Fresistance,z
-			var F_x = F_traction + F_latFront * Mathf.Sin(steeringAngle) * F_resistance.x;
-			var F_y = F_latRear + F_latFront * Mathf.Cos(steeringAngle) * F_resistance.y;
+//			var F_x = F_traction + F_latFront * Mathf.Sin(steeringAngle) * F_resistance.x;
+//			var F_y = F_latRear + F_latFront * Mathf.Cos(steeringAngle) * F_resistance.y;
 			// TODO: do i have my x / x and z / y conversion right here?
 
 			// 19. Compute the torque on the car body
 			//     Torque=cos(σ)*Flat,front *b–Flat,rear *c
-			var Torque = Mathf.Cos(steeringAngle) * F_latFront * b - F_latRear * c;
+//			var Torque = Mathf.Cos(steeringAngle) * F_latFront * b - F_latRear * c;
 
 			// 20. Compute the  acceleration
 			//     a=F/M
@@ -102,7 +103,7 @@ namespace RL2600.Behavior {
 			var angularAcceleration = 0; // TODO
 
 			// 22. Transform acceleration from car to world
-			transform.TransformVector(acceleration);
+//			transform.TransformVector(acceleration);
 
 			// 23. Integrate the acceleration to get the velocity (in world reference frame)
 			// 24. Integrate the velocity to get the new position in world coordinate: Pwc += dt * Vwc
@@ -114,7 +115,11 @@ namespace RL2600.Behavior {
 
 
 
+			// 1. Transform velocity in world reference frame to velocity in car reference frame 
+			Vector2 velocity = (Vector2)transform.InverseTransformVector(rb2d.velocity);
 
+			// 22. Transform acceleration from car to world
+//			transform.TransformVector(acceleration);
 
 
 			// Marco only:
@@ -125,7 +130,7 @@ namespace RL2600.Behavior {
 			float engineForce = input.y * ENGINEPOWERBCYREMOVE;
 
 			// Determine forces
-			Vector2 F_long = getTotalLongitudinalForces(engineForce, rb2d.velocity);
+			Vector2 F_long = getTotalLongitudinalForces(engineForce, velocity);
 			Vector2 F_lat = getTotalLateralForces(input.x);
 
 			Debug.Log("input: " + input); // DEBUG
@@ -139,6 +144,10 @@ namespace RL2600.Behavior {
 
 			// Accel
 			var accel = F_long / rb2d.mass;
+
+			// 22. Transform acceleration from car to world
+			accel = transform.TransformVector(accel);
+
 			// New velocity
 			var V_new = rb2d.velocity + accel * Time.fixedDeltaTime;
 			// New position
@@ -198,6 +207,11 @@ namespace RL2600.Behavior {
 		// Get the resistive force due to friction of various components 
 		private Vector2 getRollingResistance(Vector2 velocity, float rrConstant = C_RR) {
 			return -rrConstant * velocity;
+		}
+
+		// Get the force caused by braking
+		private Vector2 getBrakingForce(float brakingConstant = C_BRAKE, Vector2? unitHeading = null) {
+			return -(unitHeading ?? Vector2.right) * brakingConstant;
 		}
 
 		/*
