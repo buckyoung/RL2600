@@ -15,6 +15,8 @@ namespace RL2600.Behavior {
 		const float C_CS = 2.0f; // corning-stiffness
 		const float C_BRAKE = 2.0f; // braking constant
 
+		const float MAX_TURN = 60.0f;
+
 		private int id;
 		private Rigidbody2D rb2d;
 
@@ -126,27 +128,17 @@ namespace RL2600.Behavior {
 
 			var input = new Vector2(Input.GetAxis(id + "_AXIS_X"), Input.GetAxis(id + "_AXIS_Y"));
 
-			float ENGINEPOWERBCYREMOVE = 30.0f;
+			float ENGINEPOWERBCYREMOVE = 14.0f;
 			float engineForce = input.y * ENGINEPOWERBCYREMOVE;
 
 			// Determine forces
 			Vector2 F_long = getTotalLongitudinalForces(engineForce, velocity);
-			Vector2 F_lat = getTotalLateralForces(input.x);
+//			Vector2 F_lat = getTotalLateralForces(input.x);
 
-			Debug.Log("input: " + input); // DEBUG
-			Debug.Log("F_long: " + F_long); // DEBUG
-			Debug.Log("F_lat: " + F_lat); // DEBUG
+			debugStuff(input, F_long, Vector2.zero); // DEBUG
 
-			// Gas green
-			Debug.DrawLine(transform.position, transform.position + input.y * transform.right, Color.green);
-			// Turning yellow
-			Debug.DrawLine(transform.position, transform.position + input.x * -transform.up, Color.yellow);
-
-			// Accel
-			var accel = F_long / rb2d.mass;
-
-			// 22. Transform acceleration from car to world
-			accel = transform.TransformVector(accel);
+			// Accel (transform acceleration from car to world)
+			var accel = (Vector2)transform.TransformVector(F_long / rb2d.mass);
 
 			// New velocity
 			var V_new = rb2d.velocity + accel * Time.fixedDeltaTime;
@@ -155,6 +147,7 @@ namespace RL2600.Behavior {
 
 			rb2d.velocity = V_new;
 			transform.position = P_new;
+			transform.Rotate(Quaternion.AngleAxis(-input.x * 3.0f, Vector3.forward).eulerAngles);
 
 
 
@@ -182,9 +175,9 @@ namespace RL2600.Behavior {
 			Vector2 F_rr = getRollingResistance(carVelocity);
 
 			// DEBUG
-			Debug.Log("F_traction: " + F_traction);
-			Debug.Log("F_drag: " + F_drag);
-			Debug.Log("F_rr: " + F_rr);
+//			Debug.Log("F_traction: " + F_traction);
+//			Debug.Log("F_drag: " + F_drag);
+//			Debug.Log("F_rr: " + F_rr);
 
 			return F_traction + F_drag + F_rr;
 			// TODO (Revisit) should calculate a F_braking to replace F_traction when the brakes
@@ -218,17 +211,41 @@ namespace RL2600.Behavior {
 		 * LATERAL
 		 */
 
-		private Vector2 getTotalLateralForces(float turning, float corningStiffnessConstant = C_CS) {
-			var localUnitHeading = Vector3.Normalize(rb2d.transform.InverseTransformPoint(rb2d.transform.right + rb2d.transform.position));
+//		private Vector2 getTotalLateralForces(float turning, float corningStiffnessConstant = C_CS) {
+//			var localUnitHeading = Vector3.Normalize(rb2d.transform.InverseTransformPoint(rb2d.transform.right + rb2d.transform.position));
 
-			float slipAngle = getFrontSlipAngle();
+//			return corningStiffnessConstant * getFrontSlipAngle();
 
-			return turning * slipAngle * corningStiffnessConstant * localUnitHeading;
-		}
+//			float slipAngle = getFrontSlipAngle();
+//			return turning * slipAngle * corningStiffnessConstant * localUnitHeading;
+//			F_latRear + F_latFront * Mathf.Cos(steeringAngle)
+
+			//
+//			Debug.Log("COS: " + Mathf.Cos(MAX_TURN * -turning));
+//			return localUnitHeading + Quaternion.AngleAxis(MAX_TURN * -turning, Vector3.forward) * transform.right * 0.5f;
+//		}
 
 		// Slip angle (alpha) for the front tires
 		private float getFrontSlipAngle() {
 			return 10.0f;
+		}
+
+		/*
+		 * DEBUG
+		 */
+
+		private void debugStuff(Vector2 input, Vector2 F_long, Vector2 F_lat) {
+//			Debug.Log("input: " + input); // DEBUG
+//			Debug.Log("F_long: " + F_long); // DEBUG
+//			Debug.Log("F_lat: " + F_lat); // DEBUG
+//			Debug.Log("X: " + input.x); // DEBUG
+			// Gas green (input.y)
+			Debug.DrawLine(transform.position, transform.position + input.y * transform.right, Color.green);
+			// Steering green (input.x)
+			Debug.DrawLine(transform.position, transform.position + input.x * -transform.up, Color.green);
+
+			// Wheel Rotation
+			Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(MAX_TURN * -input.x, Vector3.forward) * transform.right * 0.5f, Color.yellow);
 		}
 	}
 }
