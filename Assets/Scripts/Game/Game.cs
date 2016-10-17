@@ -4,6 +4,10 @@ using UnityEngine.SceneManagement;
 
 namespace RL2600.System {
 	public class Game : MonoBehaviour {
+		void Start() {
+			GameObject go = (GameObject)Instantiate(Resources.Load("explosion"), this.transform.position, this.transform.rotation);
+		}
+
 		public void initiateKickoff() {
 			StartCoroutine(kickoffCountdown());
 		}
@@ -18,7 +22,7 @@ namespace RL2600.System {
 
 		private IEnumerator waitAfterGoal() {
 			NotificationManager.notifyMidfield("GOAL!");
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(2);
 
 			// Check if the game has ended in the past 1 second before resetting
 			if (!GameManager.getHasGameEnded()) { 

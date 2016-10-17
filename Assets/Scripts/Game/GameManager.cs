@@ -4,6 +4,7 @@ using System.Collections;
 namespace RL2600.System {
 	public class GameManager : MonoBehaviour {
 		private static Game game;
+		private static CameraShake camShake;
 
 		private static bool hasGameEnded;
 
@@ -12,6 +13,7 @@ namespace RL2600.System {
 
 			GameObject system = GameObject.Find("System");
 			game = system.GetComponent<Game>();
+			camShake = system.GetComponent<CameraShake>();
 
 			TimeManager.pause();
 
@@ -21,6 +23,7 @@ namespace RL2600.System {
 		public static void score() {
 			BallManager.hideBall();
 			TimeManager.pause();
+			camShake.shakeCam();
 
 			bool hasScoredInOT = TimeManager.getHasRegulationEnded() && !ScoreManager.getIsTied();
 
