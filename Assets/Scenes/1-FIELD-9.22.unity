@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   team: 0
+  DEBUG_disable: 0
 --- !u!1 &241883856
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +304,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 502267419}
   - 114: {fileID: 502267421}
-  - 114: {fileID: 502267420}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -324,17 +324,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 625488675}
   m_RootOrder: 1
---- !u!114 &502267420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 502267418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e70086b9ddc324db5929bf248bf6d351, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &502267421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   team: 1
+  DEBUG_disable: 1
 --- !u!1 &545213339
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,11 +658,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  refractionStrength: 0.8
+  refractionStrength: 0.7
   reflectionColor: {r: 1, g: 1, b: 1, a: 1}
-  reflectionStrength: 0.01
-  waveSpeed: 3
-  dropInterval: 1.5
+  reflectionStrength: 0.5
+  waveSpeed: 5
   shader: {fileID: 4800000, guid: 75b8f8f6b78074623a758d54121b3e1f, type: 3}
 --- !u!1 &625488674
 GameObject:

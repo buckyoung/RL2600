@@ -8,6 +8,8 @@ namespace RL2600.Player {
 		public int id = 1;
 		public Team team = Team.BLUE;
 
+		public bool DEBUG_disable = false; // DEBUG
+
 		private IMoveable moveBehavior;
 
 		void Awake() {
@@ -21,6 +23,10 @@ namespace RL2600.Player {
 
 		void Start() {
 			moveBehavior = GetComponentInChildren<IMoveable>();
+
+			if (DEBUG_disable) {
+				gameObject.SetActive(false);
+			}
 		}
 
 		void FixedUpdate() {

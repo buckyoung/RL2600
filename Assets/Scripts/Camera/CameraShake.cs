@@ -3,9 +3,9 @@ using System.Collections;
 
 namespace RL2600.System {
 	public class CameraShake : MonoBehaviour {
-		private const float SHAKE_DURATION = 0.7f;
+		private const float SHAKE_DURATION = 0.4f;
 		private const float MIN_SHAKE_MAGNITUDE = 0.1f;
-		private const float MAX_SHAKE_MAGNITUDE = 30.0f;
+		private const float MAX_SHAKE_MAGNITUDE = 10.0f;
 
 		private GameObject mainCam;
 

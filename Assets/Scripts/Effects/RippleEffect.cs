@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RL2600.Player;
 
 namespace RL2600.Effect {
+
+	// https://github.com/keijiro/RippleEffect
 	public class RippleEffect : MonoBehaviour {
 		public AnimationCurve waveform = new AnimationCurve(
 			new Keyframe(0.00f, 0.50f, 0, 0),
@@ -18,18 +21,18 @@ namespace RL2600.Effect {
 		);
 
 		[Range(0.01f, 1.0f)]
-		public float refractionStrength = 0.5f;
+		public float refractionStrength = 0.7f;
 
-		public Color reflectionColor = Color.gray;
+		public Color reflectionColor = Color.white;
 
 		[Range(0.01f, 1.0f)]
-		public float reflectionStrength = 0.7f;
+		public float reflectionStrength = 0.5f;
 
-		[Range(1.0f, 3.0f)]
-		public float waveSpeed = 1.25f;
+		[Range(1.0f, 5.0f)]
+		public float waveSpeed = 5.0f;
 
-		[Range(0.0f, 2.0f)]
-		public float dropInterval = 0.5f;
+//		[Range(0.0f, 2.0f)]
+//		public float dropInterval = 0.5f;
 
 		[SerializeField]
 		Shader shader;
@@ -42,8 +45,10 @@ namespace RL2600.Effect {
 				time = 1000;
 			}
 
-			public void Reset() {
-				position = new Vector2(Random.value, Random.value);
+			public void Reset(Team goal) {
+				float xPos = (goal == Team.BLUE) ? 0.0f : 1.0f; // This emits from the opposite goal, so that the movement after the camera shake is on the goal that was scored on... TODO maybe switch back?
+
+				position = new Vector2(xPos, 0.5f);
 				time = 0;
 			}
 
@@ -100,14 +105,14 @@ namespace RL2600.Effect {
 		}
 
 		void Update() {
-			if (dropInterval > 0) {
-				timer += Time.deltaTime;
-
-				while (timer > dropInterval) {
-					Emit();
-					timer -= dropInterval;
-				}
-			}
+//			if (dropInterval > 0) {
+//				timer += Time.deltaTime;
+//
+//				while (timer > dropInterval) {
+//					Emit(Team.BLUE);
+//					timer -= dropInterval;
+//				}
+//			}
 
 			foreach (var d in droplets) {
 				d.Update();
@@ -120,8 +125,8 @@ namespace RL2600.Effect {
 			Graphics.Blit(source, destination, material);
 		}
 
-		public void Emit() {
-			droplets[dropCount++ % droplets.Length].Reset();
+		public void Emit(Team team) {
+			droplets[dropCount++ % droplets.Length].Reset(team);
 		}
 	}
 }
