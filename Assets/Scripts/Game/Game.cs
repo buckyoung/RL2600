@@ -4,10 +4,6 @@ using UnityEngine.SceneManagement;
 
 namespace RL2600.System {
 	public class Game : MonoBehaviour {
-		void Start() {
-			GameObject go = (GameObject)Instantiate(Resources.Load("explosion"), this.transform.position, this.transform.rotation);
-		}
-
 		public void initiateKickoff() {
 			StartCoroutine(kickoffCountdown());
 		}
