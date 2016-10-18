@@ -46,7 +46,7 @@ namespace RL2600.Effect {
 			}
 
 			public void Reset(Team goal) {
-				float xPos = (goal == Team.BLUE) ? 0.0f : 1.0f; // This emits from the opposite goal, so that the movement after the camera shake is on the goal that was scored on... TODO maybe switch back?
+				float xPos = (goal == Team.BLUE) ? 1.0f : 0.0f;
 
 				position = new Vector2(xPos, 0.5f);
 				time = 0;
