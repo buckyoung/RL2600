@@ -21,12 +21,13 @@ namespace RL2600.Score {
 
 		void OnCollisionEnter2D(Collision2D col) {
 			if (col.gameObject.tag == "Ball") {
-				cc2d.enabled = true;
-				pe2d.enabled = true;
+// 				TODO: create explosion after goal
+//				cc2d.enabled = true; 
+//				pe2d.enabled = true;
 
-				ScoreManager.score(team);
+				GameManager.score(team);
 
-				StartCoroutine(disableExplosion());
+//				StartCoroutine(disableExplosion()); // TODO Disable explosion force after some time
 			}
 		}
 

@@ -1401,7 +1401,7 @@ PointEffector2D:
   m_AngularDrag: 0
   m_ForceSource: 0
   m_ForceTarget: 0
-  m_ForceMode: 0
+  m_ForceMode: 2
 --- !u!1 &1160082147
 GameObject:
   m_ObjectHideFlags: 0

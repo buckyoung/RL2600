@@ -26,6 +26,7 @@ namespace RL2600.System {
 		}
 
 		public static void score(Team team) {
+			ScoreManager.score(team);
 			BallManager.hideBall();
 			TimeManager.pause();
 			camShake.shakeCam();
