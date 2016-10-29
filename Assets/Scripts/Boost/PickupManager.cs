@@ -12,7 +12,7 @@ namespace RL2600.System {
 
         public static void resetPickups() {
 			foreach (Pickup p in pickupScripts) {
-				p.setIsActive(true);
+				p.resetPickup();
             }
         }
 

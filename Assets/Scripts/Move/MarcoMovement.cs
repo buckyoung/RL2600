@@ -149,6 +149,8 @@ namespace RL2600.Behavior {
 			transform.position = P_new;
 			transform.Rotate(Quaternion.AngleAxis(-input.x * 3.0f, Vector3.forward).eulerAngles);
 
+			BoostManager.getBoostModifier(id); // TODO 
+
 
 
 

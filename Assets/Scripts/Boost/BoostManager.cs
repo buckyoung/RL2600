@@ -8,7 +8,6 @@ namespace RL2600.System {
 
 		private const float SPEED_MODIFIER = 2.2f;
 		private const int DECREASE_MODIFIER = 20;
-		private const float INCREASE_AMT = 35;
 		private const float START_AMT = 35;
 
 		void Start() {
@@ -38,8 +37,8 @@ namespace RL2600.System {
 			return SPEED_MODIFIER;
 		}
 
-		// Returns true if picked up, false if not
-		public static bool pickupBoost(int id) {
+		// Returns true if can be picked up, false if not
+		public static bool canPickupBoost(int id) {
 			int index = id - 1;
 
 			// Do not pick up if boost is full
@@ -47,18 +46,22 @@ namespace RL2600.System {
 				return false;
 			} 
 
-			boosts[index] += INCREASE_AMT;
-
-			if (boosts[index] > 100.0f) {
-				boosts[index] = 100.0f;
-			}
-
 			return true;
 		}
 
 		public static void resetBoosts() {
 			for (int i = 0; i < boosts.Length; i++) {
 				boosts[i] = START_AMT;
+			}
+		}
+
+		public static void incrementBoost(int id, float amount) {
+			int index = id - 1;
+
+			boosts[index] += amount;
+
+			if (boosts[index] > 100.0f) {
+				boosts[index] = 100.0f;
 			}
 		}
 
