@@ -98,8 +98,6 @@ namespace RL2600.Boost {
 				amount = MAX_AMT;
 			}
 
-			Debug.Log(amount);
-
 			setColor();
 		}
 
