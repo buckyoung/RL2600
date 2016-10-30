@@ -155,6 +155,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 545213340}
+  - {fileID: 1747682099}
   m_Father: {fileID: 0}
   m_RootOrder: 4
 --- !u!1 &286201220
@@ -1994,6 +1995,98 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1603391936}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1747682098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1747682099}
+  - 114: {fileID: 1747682100}
+  m_Layer: 0
+  m_Name: MarcoCurves
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1747682099
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1747682098}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.0607533, y: 0.8728126, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 241883857}
+  m_RootOrder: 1
+--- !u!114 &1747682100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1747682098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29a169c588404863be62cc630a10de7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SlipAngleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: -20
+      value: -5000
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: -3
+      value: -5800
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 3
+      value: 5800
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 20
+      value: 5000
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  TorqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 220
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1000
+      value: 220
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 4800
+      value: 310
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 7000
+      value: 220
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1790080422
 GameObject:
   m_ObjectHideFlags: 0

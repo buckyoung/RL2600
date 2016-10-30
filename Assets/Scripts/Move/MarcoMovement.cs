@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using RL2600.System;
+using RL2600.Curve;
 
 // http://www.asawicki.info/Mirror/Car%20Physics%20for%20Games/Car%20Physics%20for%20Games.html
 // https://nccastaff.bournemouth.ac.uk/jmacey/MastersProjects/MSc12/Srisuchat/Thesis.pdf
@@ -10,19 +11,48 @@ namespace RL2600.Behavior {
 	[RequireComponent (typeof (Rigidbody2D))]
 
 	public class MarcoMovement : MonoBehaviour, IMoveable {
-		const float C_DRAG = 0.4257f;
-		const float C_RR = 2.0f; // rolling-resistance // "SHOULD BE APPROX 30x C_DRAG" -- but be prepared to fine-tune TODO
+		const float C_DRAG = 2.4257f;
+		const float C_RR = 62.0f; // rolling-resistance // "SHOULD BE APPROX 30x C_DRAG" -- but be prepared to fine-tune TODO
 		const float C_CS = 2.0f; // corning-stiffness
 		const float C_BRAKE = 2.0f; // braking constant
 
 		const float MAX_TURN = 60.0f;
 
+		const float CG_TO_FRONT_AXLE = 1.25f;
+		const float CG_TO_REAR_AXLE = 1.25f;
+
+		const float LOAD_FRONT = 0.5f;
+		const float LOAD_REAR = 0.5f;
+
+		const float GEAR_DIFFERENTIAL = 3.42f;
+		const float GEAR_1 = 2.66f;
+		const float GEAR_2 = 1.78f;
+		const float GEAR_3 = 1.30f;
+		const float GEAR_4 = 1.00f;
+		const float GEAR_5 = 0.74f;
+		const float GEAR_6 = 0.50f;
+		const float GEAR_REVERSE = 2.90f;
+
+		const float RADIUS_WHEEL = 0.34f;
+
+		const float INERTIA = 8.2f;
+
+		private float YawRate = 0.0f;
+		private float CurrentGearRatio = GEAR_4;
+		private float AngularVelocity = 0.0f;
+		private Vector2 Velocity;
+		private Vector2 Position;
+
 		private int id;
 		private Rigidbody2D rb2d;
+
+		private MarcoMovementCurves curves;
 
 		void Start() {
 			id = GetComponentInParent<Player.Player>().id;
 			rb2d = GetComponent<Rigidbody2D>();
+
+			curves = GameObject.Find("MarcoCurves").GetComponent<MarcoMovementCurves>();
 		}
 
 		void Update() {
@@ -35,119 +65,194 @@ namespace RL2600.Behavior {
 		}
 
 		public void move() {
+			Debug.Log("========================");
+
 			// 0. Some needed variables
-			var steeringAngle = new Vector2(Input.GetAxis(id + "_AXIS_X"), 0); // Steering angle (σ)  TODO: Get from user input?
-			var w = new Vector2(0, Input.GetAxis(id + "_AXIS_Y")); // TODO angular velocity of the engine in rad/s: ωe = 2π Ωe / 60    \\Note\\ Ω === engine turnover rate // Surely this is related to how much gas you are giving it // or its related to #6
-			var b = 0.5f; // TODO get from car (center to front axle)... no idea what units this should be
-			var c = 0.5f; // TODO get from car (center to rear axle)... no idea what units this whould be
+			float Steering = Input.GetAxis(id + "_AXIS_X"); // Steering angle (σ)
+			float Throttle = Input.GetAxis(id + "_AXIS_Y");
+			Debug.Log("Steering " + Steering);
+			Debug.Log("Throttle " + Throttle);
 
-			// 1. Transform velocity in world reference frame to velocity in car reference frame 
-			//    (Vx = Vlong, Vy = Vlat). Convention for car reference frame: 
-			//    x – pointing to the front, z – pointing to the right
-//			Vector2 velocity = (Vector2)transform.InverseTransformVector(rb2d.velocity);
+//			1. Transform velocity in world reference frame to velocity in car reference frame (Vx = Vlong, Vz = Vlong). Convention for car reference frame: x – pointing to the front, z – pointing to the right
+			Vector2 V_Car = (Vector2)transform.InverseTransformVector(rb2d.velocity);
+			Debug.Log("V_Car " + V_Car);
 
-			// 2. Compute the slip angles for front and rear wheels (equation 5.2)
-			//    αfront = arctan((Vlat + ω * b) / Vlong)) – σ * sgn(Vlong) 
-			//    αrear = arctan((Vlat - ω * c) / Vlong))
-//9			var slipAngleFront = Mathf.Atan((velocity.y) + w * b / velocity.x) - steeringAngle * Mathf.Sign(velocity.x);
-//			var slipAngleRear = Mathf.Atan((velocity.y) - w * c / velocity.x);
+//			2. Compute the slip angles for front and rear wheels (equation 5.2) [alpha]
+//				αfront = arctan((Vlat + ω * b) / Vlong)) – σ * sgn(Vlong) 
+//				αrear = arctan((Vlat - ω * c) / Vlong))
+			float YawSpeed_Front = CG_TO_FRONT_AXLE * YawRate;
+			float YawSpeed_Rear = -CG_TO_REAR_AXLE * YawRate;
+			Debug.Log("YawSpeed_Front " + YawSpeed_Front);
+			Debug.Log("YawSpeed_Rear " + YawSpeed_Rear);
 
-			// 3. Compute Flat = Ca * slip angle (do for both rear and front wheels)
-//			var F_latFront = slipAngleFront * C_CS;
-//			var F_latRear = slipAngleRear * C_CS;
+			float SlipAngle_Front = Mathf.Atan((V_Car.y) + YawSpeed_Front / V_Car.x) - Steering * Mathf.Sign(V_Car.x);
+			float SlipAngle_Rear = Mathf.Atan((V_Car.y) - YawSpeed_Rear / V_Car.x);
+			if (float.IsNaN(SlipAngle_Front)) {
+				SlipAngle_Front = 0.0f;
+			}
+			if (float.IsNaN(SlipAngle_Rear)) {
+				SlipAngle_Rear = 0.0f;
+			}
+			Debug.Log("SlipAngle_Front " + SlipAngle_Front);
+			Debug.Log("SlipAngle_Rear " + SlipAngle_Rear);
 
-			// 4. Cap Flat to maximum normalized frictional force (do for both rear and front wheels)
-			// TODO: cap due to max torque an engine can put out at a given RPM? ...no that seems to be #7...
-//			var F_capFront = F_latFront; // TODO CAP THIS
-//			var F_capRear = F_latRear; // TODO CAP THIS
+//			3. Compute Flat = Ca * slip angle (do for both rear and front wheels)
+			float F_LatFront;
+			float F_LatRear;
 
-			// 5. Multiply Flat by the load (do for both rear and front wheels) to obtain the cornering forces.
-//			var F_cornFront = F_capFront * 0.5f; // TODO is .5 good?
-//			var F_cornRear = F_capRear * 0.5f; // TODO is .5 good?
+//			TODO if (SlipAngle_Front < 5800) {
+//				F_LatFront = SlipAngle_Front * C_CS;
+//				F_LatRear = SlipAngle_Rear * C_CS;
+//			}
+
+//			4. Cap Flat to maximum normalized frictional force (do for both rear and front wheels)
+			float F_LatFrontNormal = curves.SlipAngle.Evaluate(SlipAngle_Front);
+			float F_LatRearNormal = curves.SlipAngle.Evaluate(SlipAngle_Rear);
+			Debug.Log("F_LatFrontNormal " + F_LatFrontNormal);
+			Debug.Log("F_LatRearNormal " + F_LatRearNormal);
+
+//			5. Multiply Flat by the load (do for both rear and front wheels) to obtain the cornering forces.
+			F_LatFront = F_LatFrontNormal * LOAD_FRONT;
+			F_LatRear = F_LatRearNormal * LOAD_REAR;
+			Debug.Log("F_LatFront " + F_LatFront);
+			Debug.Log("F_LatRear " + F_LatRear);
+
+			// TODO Marco says: "For very small angles (below the peak) the lateral force can be approximated by a linear function:"
+			// "Flateral = Ca * alpha"
+			// NOTE: the peak is 5800!
+			// WILL NEED TO DO THIS @ #3 in the if statement
+			// I just cant believe we are throwing away such a large portion of that curve.
+			// I'm going to use the curve for now and can revisit this later
 
 //			6. Compute the engine turn over rate Ωe = Vx 60*gk*G / (2π * rw)
+			// RPM!!
+			float Turnover_Engine = (float)(V_Car.x * 60 * CurrentGearRatio * GEAR_DIFFERENTIAL) / (float)(2 * 3.14 * RADIUS_WHEEL);
+			Debug.Log("Turnover_Engine " + Turnover_Engine);
+
 //			7. Clamp the engine turn over rate from 6 to the defined redline
-//			8. If use automatic transmission call automaticTransmission() function
-//			to shift the gear
+			Turnover_Engine = Mathf.Clamp(Turnover_Engine, 1000.0f, 6000.0f);
+			Debug.Log("Turnover_Engine (clamped) " + Turnover_Engine);
+
+//			8. If use automatic transmission call automaticTransmission() function to shift the gear
+			// TODO
+
 //			9. Compute the constant that define the torque curve line from the engine turn over rate
 //			10. From 9, compute the maximum engine torque, Te
-//			11. Compute the maximum torque applied to the wheel Tw = Te * gk * G
+			float Torque_Engine = curves.EngineTorque.Evaluate(Turnover_Engine);
+			Debug.Log("Torque_Engine " + Torque_Engine);
 
-			// 12. Multiply the maximum torque with the fraction of the throttle
-			//     position to get the actual torque applied to the wheel (Ftraction - The traction force)
-			var F_traction = 0; // TODO
+//			11. Compute the maximum torque applied to the wheel Tw = Te * gk * G
+			float Torque_Wheel = Torque_Engine * CurrentGearRatio * GEAR_DIFFERENTIAL;
+			Debug.Log("Torque_Wheel " + Torque_Wheel);
+
+			// 12. Multiply the maximum torque with the fraction of the throttle position to get the actual torque applied to the wheel (Ftraction - The traction force)
+			float F_traction = Torque_Wheel * Throttle;
+			Debug.Log("F_traction " + F_traction);
 
 //			13. If the player is braking replace the traction force from 12 to a defined braking force
+			// TODO 
+
 //			14. If the car is in reverse gear replace the traction force from 12 to a defined reverse force
+			// TODO 
 
 			// 15-17 compute total resistance 
-			var F_rr = 0; // TODO
-			var F_drag = 0; // TODO
-//			Vector2 F_resistance = F_rr + F_drag;
+			Vector2 F_rr = getRollingResistance(V_Car);
+			Vector2 F_drag = getDrag(V_Car);
+			Vector2 F_resistance = F_rr + F_drag;
+			Debug.Log("F_resistance " + F_resistance);
 
 			// 18. Sum the force on the car body
 			//     Fx = Ftraction + Flat,front * sin (σ) * Fresistance,x
 			//     Fz = Flat, rear + Flat,front * cos (σ) * Fresistance,z
-//			var F_x = F_traction + F_latFront * Mathf.Sin(steeringAngle) * F_resistance.x;
-//			var F_y = F_latRear + F_latFront * Mathf.Cos(steeringAngle) * F_resistance.y;
-			// TODO: do i have my x / x and z / y conversion right here?
+			float F_x = F_traction + F_LatFront * Mathf.Sin(Steering) * F_resistance.x;
+			float F_y = F_LatRear + F_LatFront * Mathf.Cos(Steering) * F_resistance.y;
+			Debug.Log("F_x " + F_x);
+			Debug.Log("F_y " + F_y);
 
 			// 19. Compute the torque on the car body
 			//     Torque=cos(σ)*Flat,front *b–Flat,rear *c
-//			var Torque = Mathf.Cos(steeringAngle) * F_latFront * b - F_latRear * c;
+			float Torque_Body = Mathf.Cos(Steering) * F_LatFront * CG_TO_FRONT_AXLE - F_LatRear * CG_TO_REAR_AXLE;
+			if (float.IsNaN(Torque_Body)) {
+				Torque_Body = 0.0f;
+			}
+			Debug.Log("Torque_Body " + Torque_Body);
 
 			// 20. Compute the  acceleration
 			//     a=F/M
-			var acceleration = 0; // TODO get mass from car... force is...?
+			var FLONGDEBUG = getTotalLongitudinalForces(Torque_Engine, V_Car);
+			Vector2 Acceleration = FLONGDEBUG / rb2d.mass;
+			Debug.Log("Acceleration " + Acceleration);
 
 			// 21. Compute angular acceleration
 			//     α = Torque/Inertia
-			var angularAcceleration = 0; // TODO
+			float AngularAcceleration = Torque_Body / INERTIA;
+			Debug.Log("AngularAcceleration " + AngularAcceleration);
 
 			// 22. Transform acceleration from car to world
-//			transform.TransformVector(acceleration);
+			Acceleration = transform.TransformVector(Acceleration);
+			Debug.Log("Acceleration (world) " + Acceleration);
 
 			// 23. Integrate the acceleration to get the velocity (in world reference frame)
+			Velocity += Acceleration * Time.fixedDeltaTime;
+			Debug.Log("Velocity " + Velocity);
+
 			// 24. Integrate the velocity to get the new position in world coordinate: Pwc += dt * Vwc
+			Position += Velocity * Time.fixedDeltaTime;
+			Debug.Log("Position " + Position);
+
 			// 25. Move the camera to follow the car
+			// TODO not going to do
+
 			// 26. Integrate the angular acceleration to get the angular velocity: ω += dt * α
+			AngularVelocity = AngularAcceleration * Time.fixedDeltaTime; // TODO: not += ... that makes it climb forever...
+			Debug.Log("AngularVelocity " + AngularVelocity);
+
 			// 27. Integrate the angular velocity to get the angular orientation: Yaw angle += dt * ω
+			YawRate = AngularVelocity * Time.fixedDeltaTime;
+			Debug.Log("YawRate " + YawRate);
+
 			// 28. Obtain the rotation rate of the wheels by dividing the car speed with the wheel radius: Wheel rotation rate = car speed / wheel radius
+			// TODO why is this needed 
+
 			// 29. Re-render the car
+			rb2d.velocity = Velocity;
+			transform.position = Position;
+			rb2d.angularVelocity = AngularVelocity;
+			transform.Rotate(Quaternion.AngleAxis(-Steering * 3.0f, Vector3.forward).eulerAngles); // TODO 
 
 
 
 			// 1. Transform velocity in world reference frame to velocity in car reference frame 
-			Vector2 velocity = (Vector2)transform.InverseTransformVector(rb2d.velocity);
-
-			// 22. Transform acceleration from car to world
-//			transform.TransformVector(acceleration);
-
-
-			// Marco only:
-
-			var input = new Vector2(Input.GetAxis(id + "_AXIS_X"), Input.GetAxis(id + "_AXIS_Y"));
-
-			float ENGINEPOWERBCYREMOVE = 14.0f;
-			float engineForce = input.y * ENGINEPOWERBCYREMOVE;
-
-			// Determine forces
-			Vector2 F_long = getTotalLongitudinalForces(engineForce, velocity);
-//			Vector2 F_lat = getTotalLateralForces(input.x);
-
-			debugStuff(input, F_long, Vector2.zero); // DEBUG
-
-			// Accel (transform acceleration from car to world)
-			var accel = (Vector2)transform.TransformVector(F_long / rb2d.mass);
-
-			// New velocity
-			var V_new = rb2d.velocity + accel * Time.fixedDeltaTime;
-			// New position
-			var P_new = (Vector2)transform.position + V_new * Time.fixedDeltaTime;
-
-			rb2d.velocity = V_new;
-			transform.position = P_new;
-			transform.Rotate(Quaternion.AngleAxis(-input.x * 3.0f, Vector3.forward).eulerAngles);
+//			Vector2 velocity = (Vector2)transform.InverseTransformVector(rb2d.velocity);
+//
+//			// 22. Transform acceleration from car to world
+////			transform.TransformVector(acceleration);
+//
+//
+//			// My sad Marco only:
+//
+//			var input = new Vector2(Input.GetAxis(id + "_AXIS_X"), Input.GetAxis(id + "_AXIS_Y"));
+//
+//			float ENGINEPOWERBCYREMOVE = 14.0f;
+//			float engineForce = input.y * ENGINEPOWERBCYREMOVE;
+//
+//			// Determine forces
+//			Vector2 F_long = getTotalLongitudinalForces(engineForce, velocity);
+////			Vector2 F_lat = getTotalLateralForces(input.x);
+//
+			debugStuff(new Vector2(Steering, Throttle)); // DEBUG
+//
+//			// Accel (transform acceleration from car to world)
+//			var accel = (Vector2)transform.TransformVector(F_long / rb2d.mass);
+//
+//			// New velocity
+//			var V_new = rb2d.velocity + accel * Time.fixedDeltaTime;
+//			// New position
+//			var P_new = (Vector2)transform.position + V_new * Time.fixedDeltaTime;
+//
+//			rb2d.velocity = V_new;
+//			transform.position = P_new;
+//			transform.Rotate(Quaternion.AngleAxis(-input.x * 3.0f, Vector3.forward).eulerAngles);
 
 			BoostManager.getBoostModifier(id); // TODO 
 
@@ -236,7 +341,7 @@ namespace RL2600.Behavior {
 		 * DEBUG
 		 */
 
-		private void debugStuff(Vector2 input, Vector2 F_long, Vector2 F_lat) {
+		private void debugStuff(Vector2 input) {
 //			Debug.Log("input: " + input); // DEBUG
 //			Debug.Log("F_long: " + F_long); // DEBUG
 //			Debug.Log("F_lat: " + F_lat); // DEBUG
