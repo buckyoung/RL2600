@@ -358,6 +358,7 @@ GameObject:
   - 114: {fileID: 545213349}
   - 114: {fileID: 545213342}
   - 114: {fileID: 545213344}
+  - 114: {fileID: 545213352}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -455,6 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3bcfa99c5d646cf894c098eb3b77f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DEBUG_disableKickoffCountdown: 1
 --- !u!114 &545213348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +501,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4241d7ddb10641a98e177e0f5ac7e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &545213352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 545213339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe9111b2103440f0af888b39457ce99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showFPS: 1
+  sampleDelay: 0.5
 --- !u!1 &558960474
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,7 +2050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29a169c588404863be62cc630a10de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlipAngleCurve:
+  SlipAngle:
     serializedVersion: 2
     m_Curve:
     - time: -20
@@ -2061,7 +2076,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  TorqueCurve:
+  EngineTorque:
     serializedVersion: 2
     m_Curve:
     - time: 0

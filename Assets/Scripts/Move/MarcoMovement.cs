@@ -11,8 +11,8 @@ namespace RL2600.Behavior {
 	[RequireComponent (typeof (Rigidbody2D))]
 
 	public class MarcoMovement : MonoBehaviour, IMoveable {
-		const float C_DRAG = 2.4257f;
-		const float C_RR = 62.0f; // rolling-resistance // "SHOULD BE APPROX 30x C_DRAG" -- but be prepared to fine-tune TODO
+		const float C_DRAG = 0.4257f;
+		const float C_RR = 12.8f; // rolling-resistance // "SHOULD BE APPROX 30x C_DRAG" -- but be prepared to fine-tune TODO
 		const float C_CS = 2.0f; // corning-stiffness
 		const float C_BRAKE = 2.0f; // braking constant
 
@@ -38,10 +38,7 @@ namespace RL2600.Behavior {
 		const float INERTIA = 8.2f;
 
 		private float YawRate = 0.0f;
-		private float CurrentGearRatio = GEAR_4;
-		private float AngularVelocity = 0.0f;
-		private Vector2 Velocity;
-		private Vector2 Position;
+		private float CurrentGearRatio = GEAR_1;
 
 		private int id;
 		private Rigidbody2D rb2d;
@@ -146,8 +143,8 @@ namespace RL2600.Behavior {
 			Debug.Log("Torque_Wheel " + Torque_Wheel);
 
 			// 12. Multiply the maximum torque with the fraction of the throttle position to get the actual torque applied to the wheel (Ftraction - The traction force)
-			float F_traction = Torque_Wheel * Throttle;
-			Debug.Log("F_traction " + F_traction);
+			float F_Traction = (Torque_Wheel * Throttle) / RADIUS_WHEEL;
+			Debug.Log("F_traction " + F_Traction);
 
 //			13. If the player is braking replace the traction force from 12 to a defined braking force
 			// TODO 
@@ -156,18 +153,19 @@ namespace RL2600.Behavior {
 			// TODO 
 
 			// 15-17 compute total resistance 
-			Vector2 F_rr = getRollingResistance(V_Car);
-			Vector2 F_drag = getDrag(V_Car);
-			Vector2 F_resistance = F_rr + F_drag;
-			Debug.Log("F_resistance " + F_resistance);
+			Vector2 F_RR = getRollingResistance(V_Car);
+			Vector2 F_Drag = getDrag(V_Car);
+
+			Vector2 F_Resistance = F_RR + F_Drag;
+			Debug.Log("F_Resistance " + F_Resistance);
 
 			// 18. Sum the force on the car body
 			//     Fx = Ftraction + Flat,front * sin (σ) * Fresistance,x
 			//     Fz = Flat, rear + Flat,front * cos (σ) * Fresistance,z
-			float F_x = F_traction + F_LatFront * Mathf.Sin(Steering) * F_resistance.x;
-			float F_y = F_LatRear + F_LatFront * Mathf.Cos(Steering) * F_resistance.y;
-			Debug.Log("F_x " + F_x);
-			Debug.Log("F_y " + F_y);
+			float F_X = F_Traction + F_LatFront * Mathf.Sin(Steering) * F_Resistance.x;
+			float F_Y = F_LatRear + F_LatFront * Mathf.Cos(Steering) * F_Resistance.y;
+			Debug.Log("F_X " + F_X);
+			Debug.Log("F_Y " + F_Y);
 
 			// 19. Compute the torque on the car body
 			//     Torque=cos(σ)*Flat,front *b–Flat,rear *c
@@ -179,9 +177,10 @@ namespace RL2600.Behavior {
 
 			// 20. Compute the  acceleration
 			//     a=F/M
-			var FLONGDEBUG = getTotalLongitudinalForces(Torque_Engine, V_Car);
-			Vector2 Acceleration = FLONGDEBUG / rb2d.mass;
-			Debug.Log("Acceleration " + Acceleration);
+			float Acceleration_X = F_X / rb2d.mass;
+			float Acceleration_Y = F_Y / rb2d.mass;
+			Debug.Log("Acceleration_X " + Acceleration_X);
+			Debug.Log("Acceleration_Y " + Acceleration_Y);
 
 			// 21. Compute angular acceleration
 			//     α = Torque/Inertia
@@ -189,36 +188,36 @@ namespace RL2600.Behavior {
 			Debug.Log("AngularAcceleration " + AngularAcceleration);
 
 			// 22. Transform acceleration from car to world
-			Acceleration = transform.TransformVector(Acceleration);
+			Vector2 Acceleration = transform.TransformVector(new Vector2(Acceleration_X, Acceleration_Y));
 			Debug.Log("Acceleration (world) " + Acceleration);
 
 			// 23. Integrate the acceleration to get the velocity (in world reference frame)
-			Velocity += Acceleration * Time.fixedDeltaTime;
-			Debug.Log("Velocity " + Velocity);
+			rb2d.velocity += Acceleration * Time.fixedDeltaTime;
+			Debug.Log("rb2d.velocity " + rb2d.velocity);
 
 			// 24. Integrate the velocity to get the new position in world coordinate: Pwc += dt * Vwc
-			Position += Velocity * Time.fixedDeltaTime;
-			Debug.Log("Position " + Position);
+			transform.position += (Vector3)rb2d.velocity * Time.fixedDeltaTime;
+			Debug.Log("transform.position " + transform.position);
 
 			// 25. Move the camera to follow the car
 			// TODO not going to do
 
 			// 26. Integrate the angular acceleration to get the angular velocity: ω += dt * α
-			AngularVelocity = AngularAcceleration * Time.fixedDeltaTime; // TODO: not += ... that makes it climb forever...
-			Debug.Log("AngularVelocity " + AngularVelocity);
+			rb2d.angularVelocity += AngularAcceleration * Time.fixedDeltaTime; // TODO: not += ... that makes it climb forever...
+			Debug.Log("rb2d.angularVelocity " + rb2d.angularVelocity);
 
 			// 27. Integrate the angular velocity to get the angular orientation: Yaw angle += dt * ω
-			YawRate = AngularVelocity * Time.fixedDeltaTime;
+			YawRate = rb2d.angularVelocity * Time.fixedDeltaTime;
 			Debug.Log("YawRate " + YawRate);
 
 			// 28. Obtain the rotation rate of the wheels by dividing the car speed with the wheel radius: Wheel rotation rate = car speed / wheel radius
 			// TODO why is this needed 
 
 			// 29. Re-render the car
-			rb2d.velocity = Velocity;
-			transform.position = Position;
-			rb2d.angularVelocity = AngularVelocity;
-			transform.Rotate(Quaternion.AngleAxis(-Steering * 3.0f, Vector3.forward).eulerAngles); // TODO 
+//			rb2d.velocity = Velocity;
+//			transform.position = Position;
+//			rb2d.angularVelocity = AngularVelocity;
+//			transform.Rotate(Quaternion.AngleAxis(-Steering * 3.0f, Vector3.forward).eulerAngles); // TODO 
 
 
 
@@ -239,9 +238,6 @@ namespace RL2600.Behavior {
 //			// Determine forces
 //			Vector2 F_long = getTotalLongitudinalForces(engineForce, velocity);
 ////			Vector2 F_lat = getTotalLateralForces(input.x);
-//
-			debugStuff(new Vector2(Steering, Throttle)); // DEBUG
-//
 //			// Accel (transform acceleration from car to world)
 //			var accel = (Vector2)transform.TransformVector(F_long / rb2d.mass);
 //
@@ -254,6 +250,7 @@ namespace RL2600.Behavior {
 //			transform.position = P_new;
 //			transform.Rotate(Quaternion.AngleAxis(-input.x * 3.0f, Vector3.forward).eulerAngles);
 
+			debugStuff(new Vector2(Steering, Throttle)); // DEBUG
 			BoostManager.getBoostModifier(id); // TODO 
 
 
