@@ -76,7 +76,7 @@ InputManager:
     negativeButton: 
     positiveButton: joystick 1 button 17
     altNegativeButton: 
-    altPositiveButton: space
+    altPositiveButton: i
     gravity: 0
     dead: 0
     sensitivity: 0
@@ -197,3 +197,35 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
+  - serializedVersion: 3
+    m_Name: 1_BTN_EBRAKE
+    descriptiveName: keyboard&controller
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 1 button 18
+    altNegativeButton: 
+    altPositiveButton: j
+    gravity: 0
+    dead: 0
+    sensitivity: 0
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: 2_BTN_EBRAKE
+    descriptiveName: keyboard&controller
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 1 button 18
+    altNegativeButton: 
+    altPositiveButton: /
+    gravity: 0
+    dead: 0
+    sensitivity: 0
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 2
