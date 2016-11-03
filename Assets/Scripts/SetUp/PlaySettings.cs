@@ -14,7 +14,7 @@ namespace RL2600.Settings {
 		private static bool[] isAI;
 		private static int ID;
 
-		private static string[] cars = {"car-donatomus", "car-scopecreep", "car-sprngr", "car-tm"};
+		private static string[] cars = {"car-donatomus", "car-scopecreep", "car-sprngr", "car-tm", "car-experiment"};
 
 		void Awake() {
 			DontDestroyOnLoad(this);
@@ -48,7 +48,7 @@ namespace RL2600.Settings {
 			ID = 1;
 
 			for (int i = 0; i < carSelection.Length; i++) {
-				carSelection[i] = cars[0];
+				carSelection[i] = cars[4];
 			}
 		}
 	}
