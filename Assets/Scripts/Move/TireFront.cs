@@ -8,7 +8,7 @@ namespace RL2600.Behavior {
 		private float dynamicGrip = 10.0f;
 		private float rollingResistance = 18.0f;
 		private float maxSteer = 0.1f;
-		private float engineForce = 3000.0f;
+		private float engineForce = 10000.0f;
 
 		private Rigidbody2D car_rb;
 
@@ -22,9 +22,13 @@ namespace RL2600.Behavior {
 
 		private int player_id;
 
+		private float slip_long;
+
 		// Inputs
 		float In_Steering;
 		float In_Throttle;
+
+		const float RADIUS_WHEEL = 0.34f;
 
 		void Start() {
 			car_rb = GetComponentInParent<Rigidbody2D>();
@@ -35,22 +39,28 @@ namespace RL2600.Behavior {
 		void FixedUpdate() {
 			Debug.Log("=================");
 
-
 			car_localVelocity = transform.InverseTransformVector( car_rb.velocity );
-			Debug.Log("car_localVelocity " + car_localVelocity);
+
+
+			// Longitudinal slip
+			slip_long = ((car_rb.angularVelocity * RADIUS_WHEEL) - car_localVelocity.x) / car_localVelocity.x;
+
+			Debug.Log("car_rb.angularVelocity  " + car_rb.angularVelocity );
+
+
+
+
 
 			// Y axis, side to side
 			friction_y = car_localVelocity.y;
 
-			Debug.Log(friction_y);
+			Debug.Log("car_localVelocity.y " + car_localVelocity.y);
 
-			if (friction_y > maxGrip) {
-				friction_y = dynamicGrip;
-			} else if (friction_y < -maxGrip) {
-				friction_y = -dynamicGrip;
-			}
-
-			Debug.Log(friction_y);
+//			if (friction_y > maxGrip) {
+//				friction_y = dynamicGrip;
+//			} else if (friction_y < -maxGrip) {
+//				friction_y = -dynamicGrip;
+//			}
 
 			// X axis, front to back
 			//			friction_x = car_localVelocity.x;
@@ -66,7 +76,6 @@ namespace RL2600.Behavior {
 			//			}
 
 			localFriction = new Vector2(friction_x, friction_y);
-			Debug.Log("localFriction " + localFriction);
 
 			car_rb.AddForceAtPosition(-localFriction, car_rb.transform.position);
 
@@ -81,7 +90,6 @@ namespace RL2600.Behavior {
 			// STEER
 			In_Steering = Input.GetAxis(player_id + "_AXIS_X");
 			localTireRotation.z = 360 * maxSteer * -In_Steering;
-			Debug.Log("localTireRotation.z " + localTireRotation.z);
 			transform.localEulerAngles = localTireRotation;
 		}
 	}

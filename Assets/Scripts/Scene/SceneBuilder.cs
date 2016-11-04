@@ -21,7 +21,7 @@ namespace RL2600.Scene {
 		// Instantiate a single ball in the center of the field
 		private void instantiateBall() {
 			float xPos = 0.0f;
-			float yPos = 0.9f; 
+			float yPos = 1.0f; 
 			float zPos = 0.0f;
 
 			GameObject ballContainer = new GameObject("BallContainer");
@@ -36,7 +36,7 @@ namespace RL2600.Scene {
 		private void instantiatePickups() {
 			string[] names = {"TopLeft", "TopMiddle", "TopRight", "BottomLeft", "BottomMiddle", "BottomRight"};
 
-			float xDist = 7.8f;
+			float xDist = 37.0f;
 			float xPos = -xDist;
 			float yPos;
 			float zPos = 2.0f;
@@ -47,9 +47,9 @@ namespace RL2600.Scene {
 			// Top row
 			for (int i = 0; i < 3; i++) {
 				if (i == 1) { // center up some
-					yPos = 4.2f;
+					yPos = 21.5f;
 				} else {
-					yPos = 3.8f;
+					yPos = 19.5f;
 				}
 
 				pickup = (GameObject)Instantiate(Resources.Load("pickup"), new Vector3(xPos, yPos, zPos), Quaternion.identity);
@@ -64,9 +64,9 @@ namespace RL2600.Scene {
 			// Bottom row
 			for (int i = 3; i < 6; i++) {
 				if (i == 4) { // center down some
-					yPos = -2.7f;
+					yPos = -19.0f;
 				} else {
-					yPos = -2.3f;
+					yPos = -17.0f;
 				}
 
 				pickup = (GameObject)Instantiate(Resources.Load("pickup"), new Vector3(xPos, yPos, zPos), Quaternion.identity);

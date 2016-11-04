@@ -7,7 +7,7 @@ namespace RL2600.Behavior {
 		public float maxGrip = 2.0f;
 		public float dynamicGrip = 1.0f;
 		public float rollingResistance = 18.0f;
-		public float engineForce = 3000.0f;
+		public float engineForce = 18000.0f;
 
 		private Rigidbody2D car_rb;
 
@@ -30,18 +30,14 @@ namespace RL2600.Behavior {
 		}
 
 		void FixedUpdate() {
-			Debug.Log("=================");
-
-
 			car_localVelocity = transform.InverseTransformVector( car_rb.velocity );
-			Debug.Log("car_localVelocity " + car_localVelocity);
 
 			// Y axis, side to side
 			friction_y = car_localVelocity.y;
 
-			if (friction_y > maxGrip || friction_y > 0 ) {
+			if (friction_y > maxGrip) {
 				friction_y = dynamicGrip;
-			} else if (friction_y < -maxGrip || friction_y > 0) {
+			} else if (friction_y < -maxGrip) {
 				friction_y = -dynamicGrip;
 			}
 
@@ -59,7 +55,6 @@ namespace RL2600.Behavior {
 			//			}
 
 			localFriction = new Vector2(friction_x, friction_y);
-			Debug.Log("localFriction " + localFriction);
 
 			car_rb.AddForceAtPosition(-localFriction, car_rb.transform.position);
 

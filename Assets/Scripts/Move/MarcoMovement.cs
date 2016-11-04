@@ -43,13 +43,13 @@ namespace RL2600.Behavior {
 		private int id;
 		private Rigidbody2D rb2d;
 
-		private MarcoMovementCurves curves;
+		private MovementCurves curves;
 
 		void Start() {
 			id = GetComponentInParent<Player.Player>().id;
 			rb2d = GetComponent<Rigidbody2D>();
 
-			curves = GameObject.Find("MarcoCurves").GetComponent<MarcoMovementCurves>();
+			curves = GameObject.Find("MovementCurves").GetComponent<MovementCurves>();
 		}
 
 		void Update() {
