@@ -9,7 +9,7 @@ namespace RL2600.Score {
 
 		void OnCollisionEnter2D(Collision2D col) {
 			if (col.gameObject.tag == "Ball") {
-				ScoreManager.score(team);
+				GameManager.score(team);
 			}
 		}
 	}

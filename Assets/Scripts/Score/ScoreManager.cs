@@ -16,8 +16,6 @@ namespace RL2600.System {
 
 		public static void score(Team team) {
 			scores[(int)team] += 1;
-
-			GameManager.score();
 		}
 
 		public static bool getIsTied() {

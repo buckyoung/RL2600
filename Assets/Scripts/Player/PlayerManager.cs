@@ -63,6 +63,9 @@ namespace RL2600.System {
 			for (int i = 0; i < PlaySettings.NUM_PLAYERS; i++) {
 				playerCars[i].transform.position = initialPositions[i];
 				playerCars[i].transform.rotation = initialRotations[i];
+
+				rigidBodies[i].velocity = Vector2.zero;
+				rigidBodies[i].angularVelocity = 0;
 			}
 		}
 

@@ -4,6 +4,8 @@ using RL2600.Settings;
 
 namespace RL2600.System {
 	public class TimeManager : MonoBehaviour {
+		public bool DEBUG_infiniteTime = false;
+
 		private static int minute;
 		private static float second;
 		private static bool isPaused;
@@ -24,7 +26,9 @@ namespace RL2600.System {
 				second = 60;
 			}
 
-			second -= difference;
+			if (!DEBUG_infiniteTime) {
+				second -= difference;
+			}
 
 			checkNotify();
 			checkEndOfRegulation();

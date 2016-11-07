@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 namespace RL2600.System {
 	public class Game : MonoBehaviour {
+		public bool DEBUG_disableKickoffCountdown = false;
+
 		public void initiateKickoff() {
 			StartCoroutine(kickoffCountdown());
 		}
@@ -18,9 +20,9 @@ namespace RL2600.System {
 
 		private IEnumerator waitAfterGoal() {
 			NotificationManager.notifyMidfield("GOAL!");
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(2);
 
-			// Check if the game has ended in the past 1 second before resetting
+			// Check if the game has ended in the past 2 seconds before resetting
 			if (!GameManager.getHasGameEnded()) { 
 				NotificationManager.clearMidfield();
 				GameManager.resetAllAfterGoal();
@@ -29,12 +31,20 @@ namespace RL2600.System {
 		}
 
 		private IEnumerator kickoffCountdown() {
+			var oneSecond = 1;
+
+			//DEBUG
+			if (DEBUG_disableKickoffCountdown) {
+				oneSecond = 0;
+			}
+			//END DEBUG
+
 			NotificationManager.notifyMidfield("3");
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(oneSecond);
 			NotificationManager.notifyMidfield("2");
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(oneSecond);
 			NotificationManager.notifyMidfield("1");
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(oneSecond);
 			NotificationManager.notifyMidfield("GO!");
 
 			GameManager.renableOnKickoff();

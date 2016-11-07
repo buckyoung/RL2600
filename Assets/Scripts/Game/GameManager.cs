@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RL2600.Player;
+using RL2600.Effect;
 
 namespace RL2600.System {
 	public class GameManager : MonoBehaviour {
 		private static Game game;
+		private static CameraShake camShake;
+		private static RippleEffect rippleEffect;
 
 		private static bool hasGameEnded;
 
@@ -12,15 +16,21 @@ namespace RL2600.System {
 
 			GameObject system = GameObject.Find("System");
 			game = system.GetComponent<Game>();
+			camShake = system.GetComponent<CameraShake>();
+
+			rippleEffect = Camera.main.GetComponent<RippleEffect>();
 
 			TimeManager.pause();
 
 			game.initiateKickoff();
 		}
 
-		public static void score() {
+		public static void score(Team team) {
+			ScoreManager.score(team);
 			BallManager.hideBall();
 			TimeManager.pause();
+			camShake.shakeCam();
+			rippleEffect.Emit(team);
 
 			bool hasScoredInOT = TimeManager.getHasRegulationEnded() && !ScoreManager.getIsTied();
 
