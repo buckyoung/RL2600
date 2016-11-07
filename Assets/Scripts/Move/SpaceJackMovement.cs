@@ -11,24 +11,24 @@ namespace RL2600.Behavior {
 	public class SpaceJackMovement : MonoBehaviour, IMoveable {
 		public float gravity = 9.81f;  // m/s^2
 		public float inertiaScale = 1.0f;  // Multiply by mass for inertia
-		public float halfWidth = 0.22f; // Centre to side of chassis (metres)
-		public float centerToCg = -0.15f; // Center of sprite to center of gravity (CenterSpriteX + CenterToCg = Xposition of CG)
-		public float cgToFront = 0.55f; // Centre of gravity to front of chassis (metres)
-		public float cgToRear = 0.27f;   // Centre of gravity to rear of chassis
-		public float cgToFrontAxle = 0.35f;  // Centre gravity to front axle
-		public float cgToRearAxle = 0.21f;  // Centre gravity to rear axle
-		public float cgHeight = 0.15f;  // Centre gravity height
-		public float wheelRadius = 0.05f;  // Includes tire (also represents height of axle)
-		public float wheelWidth = 0.05f;  // Used for render only
+		public float halfWidth = 0.99f; // Centre to side of chassis (metres)
+//		public float centerToCg = -0.15f; // Center of sprite to center of gravity (CenterSpriteX + CenterToCg = Xposition of CG)
+		public float cgToFront = 2.2f; // Centre of gravity to front of chassis (metres)
+		public float cgToRear = 2.2f;   // Centre of gravity to rear of chassis
+		public float cgToFrontAxle = 1.5f;  // Centre gravity to front axle
+		public float cgToRearAxle = 1.2f;  // Centre gravity to rear axle
+		public float cgHeight = 0.7f;  // Centre gravity height
+		public float wheelRadius = 0.6f;  // Includes tire (also represents height of axle)
+		public float wheelWidth = 0.2f;  // Used for render only
 		public float tireGrip = 2.0f;  // How much grip tires have
 		public float lockGrip = 0.6f;  // % of grip available when wheel is locked
-		public float engineForce = 5000.0f;
+		public float engineForce = 8000.0f;
 		public float boostForce = 4000.0f; // Additional engine force due to boosting
 		public float brakeForce = 12000.0f;
 		public float eBrakeForce;
-		public float weightTransfer = 0.2f;  // How much weight is transferred during acceleration/braking
-		public float maxSteer = 4.0f;  // Maximum steering angle in radians
-		public float cornerStiffnessFront = 5.0f;
+		public float weightTransfer = 0.3f;  // How much weight is transferred during acceleration/braking
+		public float maxSteer = 0.9f;  // Maximum steering angle in radians
+		public float cornerStiffnessFront = 3.0f;
 		public float cornerStiffnessRear = 5.2f;
 		public float airResist = 2.5f;	// air resistance (* vel)
 		public float rollResist = 8.0f;	// rolling resistance force (* vel)

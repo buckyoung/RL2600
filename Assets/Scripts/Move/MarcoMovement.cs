@@ -33,7 +33,7 @@ namespace RL2600.Behavior {
 		const float GEAR_6 = 0.50f;
 		const float GEAR_REVERSE = 2.90f;
 
-		const float RADIUS_WHEEL = 0.34f;
+		const float RADIUS_WHEEL = 0.6f;
 
 		const float INERTIA = 8.2f;
 
@@ -192,7 +192,7 @@ namespace RL2600.Behavior {
 			Debug.Log("Acceleration (world) " + Acceleration);
 
 			// 23. Integrate the acceleration to get the velocity (in world reference frame)
-			rb2d.velocity += Acceleration * Time.fixedDeltaTime;
+			rb2d.velocity = Acceleration * Time.fixedDeltaTime;
 			Debug.Log("rb2d.velocity " + rb2d.velocity);
 
 			// 24. Integrate the velocity to get the new position in world coordinate: Pwc += dt * Vwc
@@ -203,7 +203,7 @@ namespace RL2600.Behavior {
 			// TODO not going to do
 
 			// 26. Integrate the angular acceleration to get the angular velocity: ω += dt * α
-			rb2d.angularVelocity += AngularAcceleration * Time.fixedDeltaTime; // TODO: not += ... that makes it climb forever...
+			rb2d.angularVelocity = AngularAcceleration * Time.fixedDeltaTime; // TODO: not += ... that makes it climb forever...
 			Debug.Log("rb2d.angularVelocity " + rb2d.angularVelocity);
 
 			// 27. Integrate the angular velocity to get the angular orientation: Yaw angle += dt * ω

@@ -29,7 +29,7 @@ namespace RL2600.Behavior {
 		void Start() {
 			car_rb = GetComponentInParent<Rigidbody2D>();
 
-			player_id = GetComponentInParent<BobzMovement>().player_id;
+			player_id = GetComponentInParent<BobzMovement>().playerId;
 		}
 
 		void FixedUpdate() {

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using RL2600.System;
+using RL2600.Curve;
 
 namespace RL2600.Behavior {
 	public class TireFront : MonoBehaviour {
@@ -23,6 +24,7 @@ namespace RL2600.Behavior {
 		private int player_id;
 
 		private float slip_long;
+		private float angularSpeedOfTire;
 
 		// Inputs
 		float In_Steering;
@@ -30,16 +32,33 @@ namespace RL2600.Behavior {
 
 		const float RADIUS_WHEEL = 0.34f;
 
+		private MovementCurves curves;
+
 		void Start() {
 			car_rb = GetComponentInParent<Rigidbody2D>();
 
-			player_id = GetComponentInParent<BobzMovement>().player_id;
+			player_id = GetComponentInParent<BobzMovement>().playerId;
+
+			curves = GameObject.Find("MovementCurves").GetComponent<MovementCurves>();
 		}
 
 		void FixedUpdate() {
 			Debug.Log("=================");
 
 			car_localVelocity = transform.InverseTransformVector( car_rb.velocity );
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 			// Longitudinal slip
@@ -56,11 +75,11 @@ namespace RL2600.Behavior {
 
 			Debug.Log("car_localVelocity.y " + car_localVelocity.y);
 
-//			if (friction_y > maxGrip) {
-//				friction_y = dynamicGrip;
-//			} else if (friction_y < -maxGrip) {
-//				friction_y = -dynamicGrip;
-//			}
+			if (friction_y > maxGrip) {
+				friction_y = dynamicGrip;
+			} else if (friction_y < -maxGrip) {
+				friction_y = -dynamicGrip;
+			}
 
 			// X axis, front to back
 			//			friction_x = car_localVelocity.x;
@@ -75,7 +94,7 @@ namespace RL2600.Behavior {
 			friction_x = -car_localVelocity.x * rollingResistance;
 			//			}
 
-			localFriction = new Vector2(friction_x, friction_y);
+			localFriction = new Vector2(friction_x, 0);
 
 			car_rb.AddForceAtPosition(-localFriction, car_rb.transform.position);
 
@@ -92,5 +111,12 @@ namespace RL2600.Behavior {
 			localTireRotation.z = 360 * maxSteer * -In_Steering;
 			transform.localEulerAngles = localTireRotation;
 		}
+
+
+		// Front wheels are rolling, therefore there is 0 slip, and thus 0 tractive force
+		private float getTractiveForce() {
+			return 0.0f;
+		}
+
 	}
 }
